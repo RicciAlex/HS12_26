@@ -153,6 +153,8 @@ void CPlayer::Uninit(void)
 //更新処理
 void CPlayer::Update(void)
 {
+	Walk++;
+
 	CScore* pScore = CGame::GetScore();
 
 	m_LastPos = m_pos;				//前回の位置の更新
@@ -171,6 +173,11 @@ void CPlayer::Update(void)
 	if (!CApplication::GetFade() && !m_bFall)
 	{//フェードしていなかったら
 		PlayerController();		//プレイヤーを動かす
+	}
+
+	if (Walk <= 240)
+	{
+		m_move.z = 0.0f;
 	}
 
 	//位置の更新

@@ -46,7 +46,7 @@ public:
 	static CCountDown* GetCountDown() { return m_pCountDown; }
 
 private:
-
+	int nCounter;
 	CPlayer* m_pPlayer;
 	static CScore* m_pScore;
 	static CTimer* m_pTimer;

@@ -131,6 +131,8 @@ private:
 	CModelPart* m_pModel[PARTS_MAX];									//モデルへのポインタ
 	CAnimator* m_pAnimator;												//アニメーターへのポインタ
 	CCylinderHitbox* m_pHitbox;											//ヒットボックス
+
+	int Walk;
 };
 
 #endif
