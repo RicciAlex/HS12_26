@@ -106,7 +106,7 @@ CNumber *CNumber::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size)
 		pNumber->Init();
 		pNumber->SetSize(size);
 		pNumber->SetPos(pos);
-		pNumber->SetColor(ColorMagenta);
+		pNumber->SetColor(D3DXCOLOR(0.4f, 0.4f, 1.0f, 1.0f));
 	}
 	else
 	{//ポインタが虚無だったら実行

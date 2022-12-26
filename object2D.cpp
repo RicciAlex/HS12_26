@@ -21,7 +21,11 @@ char* CObject_2D::m_paTextPass[CObject::TEXTURE_TYPE_MAX] =
 	"data\\TEXTURE\\Characters.png",					//TEXTURE_CHARACTERS,
 	"data\\TEXTURE\\Block.png",							//TEXTURE_BLOCK,													
 	"data\\TEXTURE\\TemporaryTitle.png",				//TEXTURE_TITLE,
+	"data\\TEXTURE\\ranking.png",						//TEXTURE_RANKING,
 	"data\\TEXTURE\\number000.png",						//TEXTURE_NUMBERS,
+	"data\\TEXTURE\\ScoreBox.png",						//TEXTURE_SCOREBOX,
+	"data\\TEXTURE\\TimerBox.png",						//TEXTURE_TIMERBOX,
+
 };
 
 //=============================================================================
@@ -310,7 +314,7 @@ void CObject_2D::SetPos(const D3DXVECTOR3 pos)
 
 	VERTEX_2D* pVtx = nullptr;					//頂点情報へのポインタ
 
-												//頂点バッファをロックする
+	//頂点バッファをロックする
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	float dim = sqrtf((m_size.x * m_size.x) + (m_size.y * m_size.y));

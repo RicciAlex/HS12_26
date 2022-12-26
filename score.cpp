@@ -44,7 +44,7 @@ CScore::~CScore()
 HRESULT CScore::Init()
 {
 	//自身のサイズを取得
-	D3DXVECTOR2 size = D3DXVECTOR2(50.0f, 80.0f);
+	D3DXVECTOR2 size = D3DXVECTOR2(40.0f, 30.0f);
 
 	for (int nCnt = 0; nCnt < m_nDigit; nCnt++)
 	{
@@ -80,14 +80,6 @@ void CScore::Uninit()
 //=============================================================================
 void CScore::Update()
 {
-	//スコアを目的の値まで1ずつ増やす処理
-	if (m_nSaveScore > m_nScore)
-	{
-		for (int nCnt = 0; nCnt < 3; nCnt++)
-		{
-			CGame::GetScore()->AddScore(1);
-		}
-	}
 }
 
 //=============================================================================
@@ -202,7 +194,7 @@ void CScore::AddSaveScore(int nValue)
 void CScore::CalcDigit(int nScore)
 {
 	//自身のサイズを取得
-	D3DXVECTOR2 size = D3DXVECTOR2(50.0f, 80.0f);
+	D3DXVECTOR2 size = D3DXVECTOR2(20.0f, 30.0f);
 
 	//自身の座標を取得
 	D3DXVECTOR3 pos = GetPos();
@@ -245,7 +237,7 @@ void CScore::CalcDigit(int nScore)
 void CScore::SetPos(D3DXVECTOR3 pos)
 {
 	//自身のサイズを取得
-	D3DXVECTOR2 size = D3DXVECTOR2(50.0f, 80.0f);
+	D3DXVECTOR2 size = D3DXVECTOR2(16.0f, 30.0f);
 
 	//座標
 	m_pos = pos;
