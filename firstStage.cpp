@@ -17,6 +17,9 @@
 #include "BoxHitbox.h"
 #include "object3D.h"
 
+#include "nail.h"
+#include "spikeTrap.h"
+
 //コンストラクタ
 CFirstStage::CFirstStage()
 {
@@ -49,6 +52,22 @@ HRESULT CFirstStage::Init(void)
 
 	CMeshfield::Create(D3DXVECTOR3(-500.0f, -200.0f, 500.0f), Vec3Null, D3DXVECTOR2(100.0f, 100.0f), 10, 10);
 
+	CBg* pBg = CBg::Create(D3DXVECTOR3(0.0f, 0.0f, 1000.0f), 3500.0f);
+
+	if (pBg)
+	{
+		pBg->SetBg(Vec3Null, ColorCyan);
+	}
+
+	CNail* pNail = nullptr;
+
+	for (int nCnt = 0; nCnt < 3; nCnt++)
+	{
+		pNail = CNail::Create(D3DXVECTOR3(-100.0f + (75.0f * nCnt), -199.0f, 400.0f));
+	}
+
+	CSpikeTrap::Create(D3DXVECTOR3(-1360.0f, -200.0f, 1050.0f), 5.0f, 120);
+
 	return S_OK;
 }
 
@@ -64,6 +83,11 @@ void CFirstStage::Update(void)
 {
 	//基本クラスの更新処理
 	CGame::Update();
+
+	if (GetPlayer()->GetFall())
+	{
+		CApplication::SetFade(CApplication::MODE_RESULTS);
+	}
 
 #ifdef _DEBUG
 

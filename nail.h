@@ -1,53 +1,44 @@
 //=============================================================================
 //
-// game.h
+// nail.h
 // Author : Ricci Alex
 //
 //=============================================================================
-#ifndef _GAME_H
-#define _GAME_H
+
+#ifndef _NAIL_H_
+#define _NAIL_H_
 
 //=============================================================================
 //インクルードファイル
 //=============================================================================
-#include "mode.h"
+#include "model.h"
 
 //=============================================================================
 //前方宣言
 //=============================================================================
-class CPlayer;
-class CScore;
+class CBoxHitbox;
 
 
-class CGame : public CMode
+class CNail : public CModel
 {
 public:
-
-	//ステージ
-	enum STAGE
-	{
-		FIRST_STAGE = 0,
-
-		STAGE_MAX
-	};
-
-	CGame();						//コンストラクタ
-	~CGame() override;				//デストラクタ
-
-	HRESULT Init(void);				//初期化処理
-	void Uninit(void);				//終了処理
-	void Update(void);				//更新処理
-
-	void SetPlayer(CPlayer* pPlayer);		//プレイヤーの設定処理
-	CPlayer* GetPlayer(void);				//プレイヤーの取得処理
-	static CScore* GetScore() { return m_pScore; }
+	CNail();											//コンストラクタ
+	~CNail() override;									//デストラクタ
+														
+	HRESULT Init(void) override;						//初期化処理
+	void Uninit(void) override;							//終了処理
+	void Update(void) override;							//更新処理
+	void Draw(void) override;							//描画処理
+														
+	static CNail* Create(const D3DXVECTOR3 pos);		//生成処理
 
 private:
 
-	CPlayer* m_pPlayer;
-	static CScore* m_pScore;
+	CBoxHitbox* m_pHitbox;								//ヒットボックス
 
 };
+
+
 
 
 

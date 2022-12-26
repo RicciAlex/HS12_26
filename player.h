@@ -30,27 +30,25 @@ public:
 	{
 		BODY = 0,								//体
 		HEAD,									//頭
-		LEFT_ARM,								//左腕
-		LEFT_HAND,								//左手
 		RIGHT_ARM,								//右腕
 		RIGHT_HAND,								//右手
-		LEFT_LEG,								//左足
-		LEFT_FOOT,								//左太腿
+		LEFT_ARM,								//左腕
+		LEFT_HAND,								//左手
 		RIGHT_LEG,								//右足
 		RIGHT_FOOT,								//右太腿
-		SAYA,									//鞘
-		KATANA,									//刀
+		LEFT_LEG,								//左足
+		LEFT_FOOT,								//左太腿
+		
 		PARTS_MAX
 	};
 
 	enum STATE
 	{
 		STATE_NEUTRAL = 0,						//ニュートラル
-		STATE_RUNNING,							//走る
-		STATE_JUMP_START,
-		STATE_JUMP,								//ジャンプ
-		STATE_ATTACK,							//攻撃
-		STATE_DAMAGE,							//ダメージ
+		STATE_MOVING,							//移動
+		STATE_MOVING_LEFT,						//移動(左)
+		//STATE_MOVING,							//走る
+		
 		STATE_MAX								
 	};
 
@@ -84,17 +82,26 @@ public:
 	const D3DXVECTOR3 GetPos(void) override;							//位置の取得処理
 	const D3DXVECTOR3 GetLastPos(void);									//前回の位置の取得処理
 	const D3DXVECTOR3 GetMove(void);									//速度の取得処理
+	const bool		  GetFall(void);									//倒したかどうかの取得処理
 
 	static CPlayer* Create(const D3DXVECTOR3 pos,int nCntPlayer);		//生成処理
 	static D3DXCOLOR* GetPlayerColors(void);							//プレイヤーの色の取得処理
 
-	void PlayerController(int nCntPlayer);								//プレイヤーのキー処理
-	void SetFriction(const float fFriction);
+	void PlayerController(void);										//プレイヤーのキー処理
+	void SetFriction(const float fFriction);							//摩擦係数の設定処理
 
 private:
 
-	void RespawnPlayer(void);
-	void HitboxEffectUpdate(void);
+	static const int   m_nTimeRange = 180;								//バランスが変わるまでの最大時間
+	static const float m_fMouseSafeRadius;								
+	static const float m_fMouseSensibilityCoefficient;		
+	static const float m_fFallLimit;
+	static const int   m_nFrameBalanceRange = 5;
+	static const float m_fFrameMove;
+
+	void RespawnPlayer(void);											//リスポーン処理
+	void HitboxEffectUpdate(void);										//当たった後の反応処理
+	void ControlBalance(void);											//バランスの処理
 
 	static D3DXCOLOR m_playerColor[PLAYER_COLOR_MAX];					//プレイヤーの色
 	static const float m_MaxWalkingSpeed;								//最大の歩くスピード
@@ -107,15 +114,17 @@ private:
 	D3DXVECTOR3 m_DestRot;												//目的の角度
 	D3DXMATRIX  m_mtxWorld;												//ワールドマトリックス
 	int			m_nInvincibilityCnt;									//無敵状態のカウンター
-	int			m_nCntAttack;											//攻撃カウンター
-	int			m_nIdxPlayer;											//プレイヤー番号
+	int			m_nCntBalance;											//バランスカウンター
+	int			m_nBalanceChangeTime;									//バランスが変わるフレーム
+	int			m_nPresentInclination;
 	float		m_fFrictionCoeff;										//摩擦係数
+	float		m_fBalance;												//バランス変数
+	float		m_fFrameBalance;										//毎フレーム加算されているバランスの値
 	bool		m_bJump;												//ジャンプしているかどうか
 	bool		m_bLanded;												//着地しているかどうか
 	bool		m_bMoving;												//移動しているかどうか
 	bool		m_bRot;													//回転したかどうか
 	bool		m_bHit;													//当たったかどうか
-	bool		m_bAttacking;											//アタックしたかどうか
 	bool		m_bFall;												//落下しているかどうか
 
 	STATE m_State;														//プレイヤーの状態
