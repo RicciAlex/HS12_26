@@ -47,13 +47,17 @@ HRESULT CTitle::Init(void)
 	CAnimateUI* pLogo = CAnimateUI::Create(CObject::TEXTURE_TITLE, D3DXVECTOR3((float)SCREEN_WIDTH * 0.5f, (float)SCREEN_HEIGHT * 0.4f, 0.0f), D3DXVECTOR2(300.0f, 150.0f), ColorWhite, animInfo);
 	pLogo->AnimateColor(true);
 
+	//サウンドの再生
+	CApplication::GetSound()->Play(CSound::SOUND_LABEL_BGM_TITLE);
+
 	return S_OK;
 }
 
 //終了処理
 void CTitle::Uninit(void)
 {
-
+	//サウンドを止める
+	CApplication::GetSound()->Stop();
 }
 
 //更新処理
@@ -61,7 +65,7 @@ void CTitle::Update(void)
 {
 	if (CInputKeyboard::GetKeyboardTrigger(DIK_RETURN))
 	{
-		CApplication::SetFade(CApplication::MODE_FIRST_STAGE);
+		CApplication::SetFade(CApplication::MODE_TUTORIAL);
 	}
 }
 

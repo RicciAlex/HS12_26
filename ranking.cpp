@@ -47,6 +47,9 @@ HRESULT CRanking::Init(void)
 	//m_pObj2D->SetTexture(CObject::TEXTURE_RANKING);
 	m_pObj2D->SetPriority(5);
 
+	//サウンドの再生
+	CApplication::GetSound()->Play(CSound::SOUND_LABEL_BGM_RANKING);
+
 	//ファイル読み込み処理
 	Load();
 
@@ -58,7 +61,8 @@ HRESULT CRanking::Init(void)
 //======================================================
 void CRanking::Uninit(void)
 {
-	//StopSound();
+	//サウンドを止める
+	CApplication::GetSound()->Stop();
 
 	if (m_pObj2D != nullptr)
 	{

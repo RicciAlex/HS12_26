@@ -197,6 +197,7 @@
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="timerbox.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="tutorial.cpp" />
     <ClCompile Include="UIString.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -245,6 +246,7 @@
     <ClInclude Include="timer.h" />
     <ClInclude Include="timerbox.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="tutorial.h" />
     <ClInclude Include="UIString.h" />
   </ItemGroup>
   <ItemGroup>

@@ -8,6 +8,7 @@
 //=============================================================================
 //インクルードファイル
 //=============================================================================
+#include "application.h"
 #include "game.h"
 #include "player.h"
 #include "score.h"
@@ -42,6 +43,9 @@ HRESULT CGame::Init(void)
 	m_pScore = CScore::Create(false, 0, 5, D3DXVECTOR3(640.0f, 60.0f, 0.0F), D3DXVECTOR2(18.0f, 25.0f));
 	//m_pTimer = CTimer::Create(false, 0, 5, D3DXVECTOR3(820.0f, 60.0f, 0.0F), D3DXVECTOR2(18.0f, 25.0f));
 
+	//サウンドの再生
+	CApplication::GetSound()->Play(CSound::SOUND_LABEL_BGM_GAME);
+
 	return S_OK;
 }
 
@@ -49,6 +53,9 @@ HRESULT CGame::Init(void)
 void CGame::Uninit(void)
 {
 	m_pScore->Uninit();
+
+	//サウンドを止める
+	CApplication::GetSound()->Stop();
 }
 
 //更新処理

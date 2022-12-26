@@ -51,6 +51,7 @@
     <ClCompile Include="scorebox.cpp" />
     <ClCompile Include="timerbox.cpp" />
     <ClCompile Include="timer.cpp" />
+    <ClCompile Include="tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimateUI.h" />
@@ -99,5 +100,6 @@
     <ClInclude Include="scorebox.h" />
     <ClInclude Include="timerbox.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="tutorial.h" />
   </ItemGroup>
 </Project>

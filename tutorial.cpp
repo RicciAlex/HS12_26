@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// results.cpp
+// tutorial.cpp
 // Author : Ricci Alex
 //
 //=============================================================================
@@ -8,26 +8,26 @@
 //=============================================================================
 //インクルードファイル
 //=============================================================================
-#include "results.h"
+#include "tutorial.h"
 #include "object2D.h"
 #include "inputKeyboard.h"
 #include "application.h"
-#include "UIString.h"
+#include "AnimateUI.h"
 
 //コンストラクタ
-CResults::CResults()
+CTutorial::CTutorial()
 {
 
 }
 
 //デストラクタ
-CResults::~CResults()
+CTutorial::~CTutorial()
 {
 
 }
 
 //初期化処理
-HRESULT CResults::Init(void)
+HRESULT CTutorial::Init(void)
 {
 	CObject_2D* pObj = CObject_2D::Create();
 
@@ -41,27 +41,27 @@ HRESULT CResults::Init(void)
 	pObj->SetColor(ColorCyan);
 	pObj->SetPriority(4);
 
-	CUIString* pString = CUIString::Create(D3DXVECTOR3((float)SCREEN_WIDTH * 0.40f, (float)SCREEN_HEIGHT * 0.3f, 0.0f), D3DXVECTOR2(350.0f, 50.0f), ColorYellow, "RESULTS", 5);
+	//CUIString* pString = CUIString::Create(D3DXVECTOR3((float)SCREEN_WIDTH * 0.40f, (float)SCREEN_HEIGHT * 0.3f, 0.0f), D3DXVECTOR2(350.0f, 50.0f), ColorYellow, "RESULTS", 5);
 
 	//サウンドの再生
-	CApplication::GetSound()->Play(CSound::SOUND_LABEL_BGM_RESULT);
+	CApplication::GetSound()->Play(CSound::SOUND_LABEL_BGM_TITLE);
 
 	return S_OK;
 }
 
 //終了処理
-void CResults::Uninit(void)
+void CTutorial::Uninit(void)
 {
 	//サウンドを止める
 	CApplication::GetSound()->Stop();
 }
 
 //更新処理
-void CResults::Update(void)
+void CTutorial::Update(void)
 {
 	if (CInputKeyboard::GetKeyboardTrigger(DIK_RETURN))
 	{
-		CApplication::SetFade(CApplication::MODE_RANKING);
+		CApplication::SetFade(CApplication::MODE_FIRST_STAGE);
 	}
 }
 
@@ -76,14 +76,14 @@ void CResults::Update(void)
 
 
 //生成処理
-CResults* CResults::Create(void)
+CTutorial* CTutorial::Create(void)
 {
-	CResults* pResults = new CResults;
+	CTutorial* pTitle = new CTutorial;
 
-	if (FAILED(pResults->Init()))
+	if (FAILED(pTitle->Init()))
 	{
 		return nullptr;
 	}
 
-	return pResults;
+	return pTitle;
 }
