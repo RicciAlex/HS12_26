@@ -15,9 +15,11 @@
 #include "timer.h"
 #include "timerbox.h"
 #include "inputKeyboard.h"
+#include "countdown.h"
 
 CScore* CGame::m_pScore = nullptr;
 CTimer* CGame::m_pTimer = nullptr;
+CCountDown* CGame::m_pCountDown = nullptr;
 
 //コンストラクタ
 CGame::CGame() : CMode(true)
@@ -41,6 +43,8 @@ HRESULT CGame::Init(void)
 
 	m_pScore = CScore::Create(false, 0, 5, D3DXVECTOR3(640.0f, 60.0f, 0.0F), D3DXVECTOR2(18.0f, 25.0f));
 	//m_pTimer = CTimer::Create(false, 0, 5, D3DXVECTOR3(820.0f, 60.0f, 0.0F), D3DXVECTOR2(18.0f, 25.0f));
+
+	m_pCountDown = CCountDown::Create(D3DXVECTOR3(640.0f, 360.0f, 0.0f));
 
 	return S_OK;
 }

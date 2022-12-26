@@ -19,6 +19,8 @@
 #include "rendering.h"
 #include "CylinderHitbox.h"
 #include "inputMouse.h"
+#include "game.h"
+#include "score.h"
 
 //=============================================================================
 //							静的変数の初期化
@@ -151,6 +153,8 @@ void CPlayer::Uninit(void)
 //更新処理
 void CPlayer::Update(void)
 {
+	CScore* pScore = CGame::GetScore();
+
 	m_LastPos = m_pos;				//前回の位置の更新
 
 	D3DXVECTOR3 cameraRot = CApplication::GetCamera()->GetRot();					//カメラの向きの取得処理
@@ -177,6 +181,13 @@ void CPlayer::Update(void)
 	m_move.y += (0.0f - m_move.y) * 0.1f;					//移動量のYコンポネントの更新
 	m_move.z += (0.0f - m_move.z) * m_fFrictionCoeff;		//移動量のZコンポネントの更新
 
+	if (m_LastPos.z > m_pos.z)
+	{
+		if (pScore != nullptr)
+		{
+			pScore->AddScore(1);
+		}
+	}
 
 	//重量を追加する
 	if (m_move.y >= -10.0f)
