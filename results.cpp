@@ -57,7 +57,7 @@ void CResults::Update(void)
 {
 	if (CInputKeyboard::GetKeyboardTrigger(DIK_RETURN))
 	{
-		CApplication::SetFade(CApplication::MODE_TITLE);
+		CApplication::SetFade(CApplication::MODE_RANKING);
 	}
 }
 
