@@ -181,7 +181,7 @@ void CPlayer::Update(void)
 	m_move.y += (0.0f - m_move.y) * 0.1f;					//移動量のYコンポネントの更新
 	m_move.z += (0.0f - m_move.z) * m_fFrictionCoeff;		//移動量のZコンポネントの更新
 
-	if (m_LastPos.z > m_pos.z)
+	if (m_LastPos.z < m_pos.z)
 	{
 		if (pScore != nullptr)
 		{

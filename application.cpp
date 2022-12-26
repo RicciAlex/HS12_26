@@ -96,7 +96,7 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd)
 
 	m_pCamera = CCamera::Create(D3DXVECTOR3(0.0f, 0.0f, -500.0f), D3DXVECTOR3(0.0f, -200.0f, 100.0f));			//ÉJÉÅÉâÇÃê∂ê¨
 
-	m_pMode = CRanking::Create();
+	m_pMode = CTitle::Create();
 
 	m_pFade = CFade::Create(0.01f);
 
