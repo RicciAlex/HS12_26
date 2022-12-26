@@ -36,8 +36,8 @@ HRESULT CTutorial::Init(void)
 		return -1;
 	}
 
-	pObj->SetPos(D3DXVECTOR3(600.0f, 300.0f, 0.0f));
-	pObj->SetSize(D3DXVECTOR2(400.0f, 100.0f));
+	pObj->SetPos(D3DXVECTOR3(640.0f, 360.0f, 0.0f));
+	pObj->SetSize(D3DXVECTOR2(640.0f, 360.0f));
 	pObj->SetTexture(CObject::TEXTURE_TUTORIAL);
 	pObj->SetPriority(5);
 	pObj = CObject_2D::Create();
