@@ -36,12 +36,11 @@ HRESULT CTutorial::Init(void)
 		return -1;
 	}
 
-	pObj->SetPos(D3DXVECTOR3((float)SCREEN_WIDTH * 0.5f, (float)SCREEN_WIDTH * 0.5f, 0.0f));
-	pObj->SetSize(D3DXVECTOR2((float)SCREEN_WIDTH * 0.5f, (float)SCREEN_WIDTH * 0.5f));
-	pObj->SetColor(ColorCyan);
-	pObj->SetPriority(4);
-
-	//CUIString* pString = CUIString::Create(D3DXVECTOR3((float)SCREEN_WIDTH * 0.40f, (float)SCREEN_HEIGHT * 0.3f, 0.0f), D3DXVECTOR2(350.0f, 50.0f), ColorYellow, "RESULTS", 5);
+	pObj->SetPos(D3DXVECTOR3(640.0f, 360.0f, 0.0f));
+	pObj->SetSize(D3DXVECTOR2(640.0f, 360.0f));
+	pObj->SetTexture(CObject::TEXTURE_TUTORIAL);
+	pObj->SetPriority(5);
+	pObj = CObject_2D::Create();
 
 	//ƒTƒEƒ“ƒh‚ÌÄ¶
 	CApplication::GetSound()->Play(CSound::SOUND_LABEL_BGM_TITLE);

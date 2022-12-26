@@ -53,7 +53,7 @@ HRESULT CTitle::Init(void)
 	m_pObj2D[1]->SetPos(D3DXVECTOR3(900.0f, 620.0f, 0.0f));
 	m_pObj2D[1]->SetSize(D3DXVECTOR2(200.0f, 50.0f));
 	m_pObj2D[1]->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
-	m_pObj2D[1]->SetTexture(CObject::TEXTURE_TUTORIAL);
+	//m_pObj2D[1]->SetTexture(CObject::TEXTURE_TITL);
 	m_pObj2D[1]->SetPriority(5);
 
 	m_pObj2D[2]->SetPos(D3DXVECTOR3(300.0f, 620.0f, 0.0f));
