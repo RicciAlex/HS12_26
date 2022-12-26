@@ -123,6 +123,7 @@
     <ClCompile Include="billboard.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+
     <ClCompile Include="nail.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -130,6 +131,10 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="spikeTrap.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    </ClCompile>
+    <ClCompile Include="ranking.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="membraneLighting.cpp">
@@ -249,6 +254,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="billboard.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ranking.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="nail.h">

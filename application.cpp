@@ -25,7 +25,7 @@
 #include "title.h"
 #include "results.h"
 #include "BoxHitbox.h"
-
+#include "ranking.h"
 
 //静的メンバー変数の宣言
 HWND CApplication::m_hWnd;													//ウインドウ
@@ -95,7 +95,7 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd)
 
 	m_pCamera = CCamera::Create(D3DXVECTOR3(0.0f, 0.0f, -500.0f), D3DXVECTOR3(0.0f, -200.0f, 100.0f));			//カメラの生成
 
-	m_pMode = CTitle::Create();
+	m_pMode = CRanking::Create();
 
 	m_pFade = CFade::Create(0.01f);
 
@@ -368,6 +368,14 @@ void CApplication::SetMode(Mode mode)
 
 	{
 		m_pMode = CResults::Create();
+	}
+
+	break;
+
+	case CApplication::MODE_RANKING:
+
+	{
+		m_pMode = CRanking::Create();
 	}
 
 	break;

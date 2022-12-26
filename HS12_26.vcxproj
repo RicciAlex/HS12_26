@@ -186,6 +186,7 @@
     <ClCompile Include="phongShading.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="pointLight.cpp" />
+    <ClCompile Include="ranking.cpp" />
     <ClCompile Include="rendering.cpp" />
     <ClCompile Include="results.cpp" />
     <ClCompile Include="score.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="phongShading.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="pointLight.h" />
+    <ClInclude Include="ranking.h" />
     <ClInclude Include="rendering.h" />
     <ClInclude Include="results.h" />
     <ClInclude Include="score.h" />
