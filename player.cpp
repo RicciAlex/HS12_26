@@ -18,6 +18,7 @@
 #include "animator.h"
 #include "rendering.h"
 #include "CylinderHitbox.h"
+#include "inputMouse.h"
 
 //=============================================================================
 //							静的変数の初期化
@@ -26,6 +27,9 @@
 const float CPlayer::m_MaxWalkingSpeed = 7.0f;			//最大歩くスピード
 const float CPlayer::m_AccelerationCoeff = 5.0f;		//加速係数
 const D3DXVECTOR3 CPlayer::m_playerSize = D3DXVECTOR3(30.0f, 175.0f, 30.0f);				//プレイヤーのサイズ
+const float CPlayer::m_fMouseSafeRadius = 50.0f;
+const float CPlayer::m_fMouseSensibilityCoefficient = 0.001f;
+const float CPlayer::m_fFallLimit = 100.0f;
 
 //プレイヤーの色
 D3DXCOLOR CPlayer::m_playerColor[PLAYER_COLOR_MAX]
@@ -58,9 +62,11 @@ CPlayer::CPlayer() : CObject::CObject(1)
 	m_bLanded = false;
 	m_bMoving = false;								//移動しているかどうか
 	m_nInvincibilityCnt = 0;						//無敵状態のカウンター
-	m_bAttacking = false;							//攻撃しているかどうか
-	m_nCntAttack = 0;								//攻撃カウンター
+	m_nCntBalance = 0;								//攻撃カウンター
 	m_fFrictionCoeff = 0.0f;						//摩擦係数
+	m_fBalance = 0.0f;								//バランス変数
+	m_nBalanceChangeTime = 0;						//バランスが変わるフレーム
+	m_fFrameBalance = 0.0f;							//毎フレーム加算されているバランスの値
 	m_bFall = false;								//落下しているかどうか
 	m_pHitbox = nullptr;							//ヒットボックス
 
@@ -93,9 +99,11 @@ HRESULT CPlayer::Init(void)
 	m_bLanded = false;
 	m_bMoving = false;								//移動しているかどうか
 	m_nInvincibilityCnt = 0;						//無敵状態のカウンター
-	m_bAttacking = false;							//攻撃しているかどうか
-	m_nCntAttack = 0;								//攻撃カウンター
+	m_nCntBalance = 0;								//攻撃カウンター
+	m_nBalanceChangeTime = random(-m_nTimeRange, m_nTimeRange);				//バランスが変わるフレーム
 	m_fFrictionCoeff = 0.1f;						//摩擦係数
+	m_fBalance = 0.0f;								//バランス変数
+	m_fFrameBalance = 0.0f;							//毎フレーム加算されているバランスの値
 	m_bFall = false;								//落下しているかどうか
 	m_pHitbox = nullptr;							//ヒットボックス
 
@@ -155,7 +163,7 @@ void CPlayer::Update(void)
 
 	if (!CApplication::GetFade() && !m_bFall)
 	{//フェードしていなかったら
-		PlayerController(0);		//プレイヤーを動かす
+		PlayerController();		//プレイヤーを動かす
 	}
 
 	//位置の更新
@@ -167,46 +175,43 @@ void CPlayer::Update(void)
 	m_move.z += (0.0f - m_move.z) * m_fFrictionCoeff;		//移動量のZコンポネントの更新
 
 
-	//目的の角度の正規化処理
-	if (m_DestRot.y - (m_rot.y) > D3DX_PI)
-	{
-		m_DestRot.y -= 2 * D3DX_PI;
-	}
-	else if (m_DestRot.y - (m_rot.y) < -D3DX_PI)
-	{
-		m_DestRot.y += 2 * D3DX_PI;
-	}
+	////目的の角度の正規化処理
+	//if (m_DestRot.y - (m_rot.y) > D3DX_PI)
+	//{
+	//	m_DestRot.y -= 2 * D3DX_PI;
+	//}
+	//else if (m_DestRot.y - (m_rot.y) < -D3DX_PI)
+	//{
+	//	m_DestRot.y += 2 * D3DX_PI;
+	//}
 
 
-	//回転角度の計算
-	D3DXVECTOR3 rot = m_rot + ((m_DestRot - m_rot) * 0.1f);
+	////回転角度の計算
+	//D3DXVECTOR3 rot = m_rot + ((m_DestRot - m_rot) * 0.1f);
 
-	//回転角度の設定処理
-	//m_pModel[BODY]->SetRot(rot);		
+	////回転角度の設定処理
+	////m_pModel[BODY]->SetRot(rot);		
 
-	//回転角度の正規化処理
-	m_rot = rot;
+	////回転角度の正規化処理
+	//m_rot = rot;
 
-	if (m_rot.y > D3DX_PI)
-	{
-		m_rot.y = -D3DX_PI + (m_rot.y - D3DX_PI);
-	}
-	else if (m_rot.y < -D3DX_PI)
-	{
-		m_rot.y = D3DX_PI - (D3DX_PI + m_rot.y);
-	}
+	//if (m_rot.y > D3DX_PI)
+	//{
+	//	m_rot.y = -D3DX_PI + (m_rot.y - D3DX_PI);
+	//}
+	//else if (m_rot.y < -D3DX_PI)
+	//{
+	//	m_rot.y = D3DX_PI - (D3DX_PI + m_rot.y);
+	//}
 
-	if (m_rot.y < D3DX_PI * -2.0f)
-	{
-		m_rot.y += D3DX_PI * 2.0f;
-	}
-	else if (m_rot.y > D3DX_PI * 2.0f)
-	{
-		m_rot.y += D3DX_PI * -2.0f;
-	}
-
-	//回転の設定処理
-	//m_pModel[BODY]->SetRot(D3DXVECTOR3(m_pModel[BODY]->GetRot().x, fRot, m_pModel[BODY]->GetRot().z));
+	//if (m_rot.y < D3DX_PI * -2.0f)
+	//{
+	//	m_rot.y += D3DX_PI * 2.0f;
+	//}
+	//else if (m_rot.y > D3DX_PI * 2.0f)
+	//{
+	//	m_rot.y += D3DX_PI * -2.0f;
+	//}
 
 	//重量を追加する
 	if (m_move.y >= -10.0f)
@@ -439,6 +444,12 @@ const D3DXVECTOR3 CPlayer::GetMove(void)
 	return m_move;
 }
 
+//倒したかどうかの取得処理
+const bool CPlayer::GetFall(void)
+{
+	return m_bFall;
+}
+
 //=============================================================================
 //
 //								静的関数
@@ -459,7 +470,7 @@ CPlayer* CPlayer::Create(const D3DXVECTOR3 pos, int nCntPlayer)
 	pModel->m_pos = pos;						//位置の設定
 	pModel->m_LastPos = pos;					//前回の位置の設定
 
-	pModel->m_rot = D3DXVECTOR3(0.0f, -D3DX_PI, 0.0f);
+	pModel->m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	pModel->m_pModel[BODY] = CModelPart::Create(CModel::MODEL_PLAYER_BODY, D3DXVECTOR3(0.0f, 53.0f, 0.0f), D3DXVECTOR3(0.0f, -2.98f, 0.0f));				//体のモデルを生成する
 
 	pModel->m_pModel[HEAD] = CModelPart::Create(CModel::MODEL_PLAYER_HEAD, D3DXVECTOR3(0.0f, 76.0f, 0.0f), D3DXVECTOR3(0.0f, -0.19f, 0.0f));							//頭のモデルを生成する
@@ -537,224 +548,24 @@ D3DXCOLOR* CPlayer::GetPlayerColors(void)
 }
 
 //プレイヤーのキー処理
-void CPlayer::PlayerController(int nCntPlayer)
+void CPlayer::PlayerController(void)
 {
 	D3DXVECTOR3 cameraRot = CApplication::GetCamera()->GetRot();					//カメラの向きの取得処理
 	D3DXVECTOR3 cR = D3DXVECTOR3(-cosf(cameraRot.y), 0.0f, sinf(cameraRot.y));
 	float fA = acosf(cR.x);
 
-	if (!m_bAttacking)
+	if (!m_bFall)
 	{
-		//移動量と目的の角度の計算
-		if (CInputKeyboard::GetKeyboardPress(DIK_W))
-		{//Wキーが押された場合
-			if (CInputKeyboard::GetKeyboardPress(DIK_A))
-			{//Aキーも押された場合
-				if (m_move.x <= m_MaxWalkingSpeed && m_move.x >= -m_MaxWalkingSpeed)
-				{
-					m_move.x += m_AccelerationCoeff * cosf(D3DX_PI * 0.25f + cameraRot.y) * (m_fFrictionCoeff);
-				}
-				if (m_move.z <= m_MaxWalkingSpeed && m_move.z >= -m_MaxWalkingSpeed)
-				{
-					m_move.z += m_AccelerationCoeff * sinf(D3DX_PI * 0.25f + cameraRot.y) * (m_fFrictionCoeff);
-				}
-
-				m_DestRot.y = -D3DX_PI * 0.75f + fA;
-
-				if (!m_bMoving && !m_bJump)
-				{
-					m_bMoving = true;
-
-					if (m_pAnimator)
-					{
-						m_pAnimator->SetPresentAnim(STATE_RUNNING);
-					}
-				}
-			}
-			else if (CInputKeyboard::GetKeyboardPress(DIK_D))
-			{//Dキーも押された場合
-				if (m_move.x <= m_MaxWalkingSpeed && m_move.x >= -m_MaxWalkingSpeed)
-				{
-					m_move.x += m_AccelerationCoeff * cosf(-D3DX_PI * 0.25f + cameraRot.y) * (m_fFrictionCoeff);
-				}
-				if (m_move.z <= m_MaxWalkingSpeed && m_move.z >= -m_MaxWalkingSpeed)
-				{
-					m_move.z += m_AccelerationCoeff * sinf(-D3DX_PI * 0.25f + cameraRot.y) * (m_fFrictionCoeff);
-				}
-
-				m_DestRot.y = -D3DX_PI * 0.25f + fA;
-
-				if (!m_bMoving && !m_bJump)
-				{
-					m_bMoving = true;
-
-					if (m_pAnimator)
-					{
-						m_pAnimator->SetPresentAnim(STATE_RUNNING);
-					}
-				}
-			}
-			else
-			{//Wキーだけが押された場合
-				if (m_move.x <= m_MaxWalkingSpeed && m_move.x >= -m_MaxWalkingSpeed)
-				{
-					m_move.x += m_AccelerationCoeff * cosf(cameraRot.y) * (m_fFrictionCoeff);
-				}
-				if (m_move.z <= m_MaxWalkingSpeed && m_move.z >= -m_MaxWalkingSpeed)
-				{
-					m_move.z += m_AccelerationCoeff * sinf(cameraRot.y) * (m_fFrictionCoeff);
-				}
-
-				m_DestRot.y = -D3DX_PI * 0.5f + fA;
-
-				if (!m_bMoving && !m_bJump)
-				{
-					m_bMoving = true;
-
-					if (m_pAnimator)
-					{
-						m_pAnimator->SetPresentAnim(STATE_RUNNING);
-					}
-				}
-			}
-		}
-		else if (CInputKeyboard::GetKeyboardPress(DIK_S))
-		{//Sキーが押された場合
-			if (CInputKeyboard::GetKeyboardPress(DIK_A))
-			{//Aキーも押された場合
-				if (m_move.x <= m_MaxWalkingSpeed && m_move.x >= -m_MaxWalkingSpeed)
-				{
-					m_move.x += m_AccelerationCoeff * cosf(D3DX_PI * 0.75f + cameraRot.y) * (m_fFrictionCoeff);
-				}
-				if (m_move.z <= m_MaxWalkingSpeed && m_move.z >= -m_MaxWalkingSpeed)
-				{
-					m_move.z += m_AccelerationCoeff * sinf(D3DX_PI * 0.75f + cameraRot.y) * (m_fFrictionCoeff);
-				}
-
-				m_DestRot.y = D3DX_PI * 0.75f + fA;
-
-				if (!m_bMoving && !m_bJump)
-				{
-					m_bMoving = true;
-
-					if (m_pAnimator)
-					{
-						m_pAnimator->SetPresentAnim(STATE_RUNNING);
-					}
-				}
-			}
-			else if (CInputKeyboard::GetKeyboardPress(DIK_D))
-			{//Dキーも押された場合
-				if (m_move.x <= m_MaxWalkingSpeed && m_move.x >= -m_MaxWalkingSpeed)
-				{
-					m_move.x += m_AccelerationCoeff * cosf(-D3DX_PI * 0.75f + cameraRot.y) * (m_fFrictionCoeff);
-				}
-				if (m_move.z <= m_MaxWalkingSpeed && m_move.z >= -m_MaxWalkingSpeed)
-				{
-					m_move.z += m_AccelerationCoeff * sinf(-D3DX_PI * 0.75f + cameraRot.y) * (m_fFrictionCoeff);
-				}
-
-				m_DestRot.y = D3DX_PI * 0.25f + fA;
-
-				if (!m_bMoving && !m_bJump)
-				{
-					m_bMoving = true;
-
-					if (m_pAnimator)
-					{
-						m_pAnimator->SetPresentAnim(STATE_RUNNING);
-					}
-				}
-			}
-			else
-			{//Sキーだけが押された場合
-				if (m_move.x <= m_MaxWalkingSpeed && m_move.x >= -m_MaxWalkingSpeed)
-				{
-					m_move.x += m_AccelerationCoeff * cosf(D3DX_PI + cameraRot.y) * (m_fFrictionCoeff);
-				}
-				if (m_move.z <= m_MaxWalkingSpeed && m_move.z >= -m_MaxWalkingSpeed)
-				{
-					m_move.z += m_AccelerationCoeff * sinf(D3DX_PI + cameraRot.y) * (m_fFrictionCoeff);
-				}
-
-				m_DestRot.y = D3DX_PI * 0.5f + fA;
-
-				if (!m_bMoving && !m_bJump)
-				{
-					m_bMoving = true;
-
-					if (m_pAnimator)
-					{
-						m_pAnimator->SetPresentAnim(STATE_RUNNING);
-					}
-				}
-			}
+		if (CInputKeyboard::GetKeyboardPress(DIK_A))
+		{
+			m_pos.x += -1.0f;
 		}
 		else if (CInputKeyboard::GetKeyboardPress(DIK_D))
-		{//Dキーだけ押された場合
-			if (m_move.x <= m_MaxWalkingSpeed && m_move.x >= -m_MaxWalkingSpeed)
-			{
-				m_move.x += m_AccelerationCoeff * cosf(-D3DX_PI * 0.5f + cameraRot.y) * (m_fFrictionCoeff);
-			}
-			if (m_move.z <= m_MaxWalkingSpeed && m_move.z >= -m_MaxWalkingSpeed)
-			{
-				m_move.z += m_AccelerationCoeff * sinf(-D3DX_PI * 0.5f + cameraRot.y) * (m_fFrictionCoeff);
-			}
-
-			m_DestRot.y = fA;
-
-			if (!m_bMoving && !m_bJump)
-			{
-				m_bMoving = true;
-
-				if (m_pAnimator)
-				{
-					m_pAnimator->SetPresentAnim(STATE_RUNNING);
-				}
-			}
-		}
-		else if (CInputKeyboard::GetKeyboardPress(DIK_A))
-		{//Aキーだけ押された場合
-			if (m_move.x <= m_MaxWalkingSpeed && m_move.x >= -m_MaxWalkingSpeed)
-			{
-				m_move.x += m_AccelerationCoeff * cosf(D3DX_PI * 0.5f + cameraRot.y) * (m_fFrictionCoeff);
-			}
-			if (m_move.z <= m_MaxWalkingSpeed && m_move.z >= -m_MaxWalkingSpeed)
-			{
-				m_move.z += m_AccelerationCoeff * sinf(D3DX_PI * 0.5f + cameraRot.y) * (m_fFrictionCoeff);
-			}
-			m_DestRot.y = D3DX_PI + fA;
-
-			if (!m_bMoving && !m_bJump)
-			{
-				m_bMoving = true;
-				
-				if (m_pAnimator)
-				{
-					m_pAnimator->SetPresentAnim(STATE_RUNNING);
-				}
-			}
-		}
-	}
-
-	//SPACEキーが押された場合
-	if (CInputKeyboard::GetKeyboardTrigger(DIK_SPACE) && !m_bJump && !m_bAttacking && m_move.y < 0.0f)
-	{//ジャンプ
-		m_move.y = 30.0f;
- 		m_bJump = true;
-		m_bLanded = false;
-
-		if (m_pAnimator != nullptr)
 		{
-			m_pAnimator->SetPresentAnim(CPlayer::STATE_JUMP_START);
+			m_pos.x += 1.0f;
 		}
-	}
 
-	//攻撃キーが押されている時
-	if (CInputKeyboard::GetKeyboardTrigger(DIK_V) &&  !m_bJump && m_bLanded && !m_bHit && !m_bAttacking)
-	{
-		m_bAttacking = true;
-		m_nCntAttack = 19;
+		ControlBalance();
 	}
 
 }
@@ -845,4 +656,45 @@ void CPlayer::HitboxEffectUpdate(void)
 	default:
 		break;
 	}
+}
+
+//バランスの処理
+void CPlayer::ControlBalance(void)
+{
+	m_nCntBalance++;
+
+	if(m_nCntBalance >= m_nBalanceChangeTime)
+	{
+		m_nCntBalance = 0;
+
+		m_nBalanceChangeTime = random(-m_nTimeRange, m_nTimeRange);
+
+		m_fFrameBalance = (float)random(-m_nFrameBalanceRange, m_nFrameBalanceRange) * 0.02f;
+	}
+
+
+	//マウスカーソルの位置の取得と変換
+	POINT pt;
+	GetCursorPos(&pt);
+	HWND wnd = CApplication::GetWindow();
+	ScreenToClient(wnd, &pt);
+	D3DXVECTOR3 MousePos, Target;
+	MousePos.x = (float)pt.x;
+	MousePos.y = (float)pt.y;
+	MousePos.z = 0.0f;
+
+	if (MousePos.x < (float)SCREEN_WIDTH * 0.5f - m_fMouseSafeRadius || MousePos.x > (float)SCREEN_WIDTH * 0.5f + m_fMouseSafeRadius)
+	{
+		float fM = ((float)SCREEN_WIDTH * 0.5f - MousePos.x) * m_fMouseSensibilityCoefficient;
+		m_fBalance += fM;
+	}
+
+	m_fBalance += m_fFrameBalance;
+
+	if (m_fBalance >= m_fFallLimit || m_fBalance <= -m_fFallLimit)
+	{
+		m_bFall = true;
+	}
+
+	CDebugProc::Print("\n\n Balance: %f", m_fBalance);
 }
