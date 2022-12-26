@@ -13,6 +13,7 @@
 #include "application.h"
 #include "number.h"
 #include "game.h"
+#include "ranking.h"
 #include <assert.h>
 
 //=============================================================================
@@ -148,6 +149,9 @@ void CScore::SetScore(int nScore)
 		aPosTex[nCnt] = m_nScore % ((int)pow(10, (m_nDigit - (nCnt + 1))) * 10) / (int)pow(10, (m_nDigit - (nCnt + 1)));
 		m_apNumber[nCnt]->SetAnimPattern(aPosTex[nCnt]);
 	}
+
+	//CResult::GetScore(m_nScore);
+	CRanking::GetRanking(m_nScore);
 
 	////スコア計算式
 	//aPosTex[0] = m_nScore % 100000 / 10000;
