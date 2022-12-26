@@ -13,8 +13,10 @@
 
 CSound::SOUNDPARAM CSound::g_aParam[SOUND_LABEL_MAX] =
 {
-	{ "data/SOUNDS/BGM/タイトル画面BGM.wav", -1 },		// SOUND_LABEL_BGM_TITLE = 0
-
+	{ "data/SOUNDS/BGM/BGM003.wav", -1 },			// SOUND_LABEL_BGM_TITLE = 0
+	{ "data/SOUNDS/BGM/BGM001.wav", -1 },			// SOUND_LABEL_BGM_GAME
+	{ "data/SOUNDS/BGM/BGM000.wav", -1 },			// SOUND_LABEL_BGM_RESULT
+	{ "data/SOUNDS/BGM/BGM002.wav", -1 },			// SOUND_LABEL_BGM_RANKING
 };
 
 //コンストラクタ

@@ -14,6 +14,8 @@
 //コンストラクタ
 CBoxHitbox::CBoxHitbox()
 {
+	nLife = 0;
+
 	for (int nCnt = 0; nCnt < 12; nCnt++)
 	{
 		m_pLine[nCnt] = nullptr;
@@ -33,6 +35,8 @@ HRESULT CBoxHitbox::Init(void)
 	{//基本クラスの初期化処理
 		return -1;
 	}
+
+	nLife = 0;
 
 	//デバッグ用の線の初期化処理
 	for (int nCnt = 0; nCnt < 12; nCnt++)
@@ -62,72 +66,79 @@ void CBoxHitbox::Uninit(void)
 //更新処理
 void CBoxHitbox::Update(void)
 {
-	SetPos(GetPos() + D3DXVECTOR3(0.2f, 0.0f, 0.0f));
+	//SetPos(GetPos() + D3DXVECTOR3(0.2f, 0.0f, 0.0f));
 
-	std::vector <CHitbox*>* pHbx = GetAllHitbox();				//全部のヒットボックスの取得処理
+	//std::vector <CHitbox*>* pHbx = GetAllHitbox();				//全部のヒットボックスの取得処理
 
-	for (int nCnt = 0; nCnt < (int)pHbx->size(); nCnt++)
-	{//全部の存在するヒットボックスを判定する
+	//for (int nCnt = 0; nCnt < (int)pHbx->size(); nCnt++)
+	//{//全部の存在するヒットボックスを判定する
 
-		if (pHbx->data()[nCnt] != this && pHbx->data()[nCnt]->GetParent() != GetParent())
-		{//親が同じではなかったら
+	//	if (pHbx->data()[nCnt] != this && pHbx->data()[nCnt]->GetParent() != GetParent())
+	//	{//親が同じではなかったら
 
-			HITBOX_SHAPE shape = pHbx->data()[nCnt]->GetShape();				//形の取得
+	//		HITBOX_SHAPE shape = pHbx->data()[nCnt]->GetShape();				//形の取得
 
-			switch (shape)
-			{
-			case CHitbox::SHAPE_SPHERE:
-				break;
+	//		switch (shape)
+	//		{
+	//		case CHitbox::SHAPE_SPHERE:
+	//			break;
 
-			case CHitbox::SHAPE_BOX:
+	//		case CHitbox::SHAPE_BOX:
 
-			{//矩形の場合
+	//		{//矩形の場合
 
-				if (BoxBoxHit(pHbx->data()[nCnt]->GetPos(), pHbx->data()[nCnt]->GetRot(), pHbx->data()[nCnt]->GetSize()))
-				{//当たった場合
+	//			if (BoxBoxHit(pHbx->data()[nCnt]->GetPos(), pHbx->data()[nCnt]->GetRot(), pHbx->data()[nCnt]->GetSize()))
+	//			{//当たった場合
 
-					if (GetEffect() != EFFECT_MAX && pHbx->data()[nCnt]->GetEffect() == EFFECT_MAX)
-					{//エフェクトがあったら、設定する
-						pHbx->data()[nCnt]->SetEffect(GetEffect());
-					}
-				}
+	//				if (GetEffect() != EFFECT_MAX && pHbx->data()[nCnt]->GetEffect() == EFFECT_MAX)
+	//				{//エフェクトがあったら、設定する
+	//					pHbx->data()[nCnt]->SetEffect(GetEffect());
+	//				}
+	//			}
 
-			}
+	//		}
 
-			break;
+	//		break;
 
-			case CHitbox::SHAPE_CYLINDER:
+	//		case CHitbox::SHAPE_CYLINDER:
 
-			{//シリンダーの場合
+	//		{//シリンダーの場合
 
-				if (BoxBoxHit(pHbx->data()[nCnt]->GetPos(), Vec3Null, pHbx->data()[nCnt]->GetSize()))
-				{//当たった場合
+	//			if (BoxBoxHit(pHbx->data()[nCnt]->GetPos(), Vec3Null, pHbx->data()[nCnt]->GetSize()))
+	//			{//当たった場合
 
-					if (GetEffect() != EFFECT_MAX && pHbx->data()[nCnt]->GetEffect() == EFFECT_MAX)
-					{//エフェクトがあったら、設定する
-						pHbx->data()[nCnt]->SetEffect(GetEffect());
-					}
-				}
-			}
+	//				if (GetEffect() != EFFECT_MAX && pHbx->data()[nCnt]->GetEffect() == EFFECT_MAX)
+	//				{//エフェクトがあったら、設定する
+	//					pHbx->data()[nCnt]->SetEffect(GetEffect());
+	//				}
+	//			}
+	//		}
 
-			break;
+	//		break;
 
-			default:
-				break;
-			}
-		}
-	}
+	//		default:
+	//			break;
+	//		}
+	//	}
+	//}
 
-	//デバッグ用の線の更新
-	for (int nCnt = 0; nCnt < 12; nCnt++)
-	{
-		if (m_pLine[nCnt] != nullptr)
-		{
-			m_pLine[nCnt]->SetPos(GetPos());
-		}
-	}
+	////デバッグ用の線の更新
+	//for (int nCnt = 0; nCnt < 12; nCnt++)
+	//{
+	//	if (m_pLine[nCnt] != nullptr)
+	//	{
+	//		m_pLine[nCnt]->SetPos(GetPos());
+	//	}
+	//}
+
+	nLife++;
 
 	CHitbox::Update();			//基本クラスの更新処理
+
+	if (nLife >= 4000)
+	{
+		Release();
+	}
 }
 
 
@@ -136,6 +147,7 @@ void CBoxHitbox::Update(void)
 //												静的関数
 //
 //==================================================================================================================
+
 
 
 //生成処理

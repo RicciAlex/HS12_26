@@ -1,38 +1,38 @@
 //=============================================================================
 //
-// firstStage.h
+// tutorial.h
 // Author : Ricci Alex
 //
 //=============================================================================
-#ifndef _FIRST_STAGE_H
-#define _FIRST_STAGE_H
+#ifndef _TUTORIAL_H
+#define _TUTORIAL_H
 
 //=============================================================================
 //インクルードファイル
 //=============================================================================
-#include "game.h"
+#include "mode.h"
 
 //=============================================================================
 //前方宣言
 //=============================================================================
 
-class CFirstStage : public CGame
+
+class CTutorial : public CMode
 {
 public:
-	CFirstStage();								//コンストラクタ
-	~CFirstStage() override;					//デストラクタ
-												
-	HRESULT Init(void);							//初期化処理
-	void Uninit(void);							//終了処理
-	void Update(void);							//更新処理
-												
-	static CFirstStage* Create(void);			//生成処理
+	CTutorial();
+	~CTutorial() override;
+
+	HRESULT Init(void) override;				//初期化処理
+	void Uninit(void) override;					//終了処理
+	void Update(void) override;					//更新処理
+
+	static CTutorial* Create(void);				//生成処理
 
 private:
 
-	int nCntEnd;
-
 };
+
 
 
 #endif

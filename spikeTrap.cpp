@@ -117,6 +117,11 @@ void CSpikeTrap::Update(void)
 
 		m_pHitbox->Update();
 	}
+
+	if (GetPos().z <= CApplication::GetCamera()->GetPos().z - 500.0f)
+	{
+		Release();
+	}
 }
 
 //•`‰æˆ—

@@ -41,6 +41,8 @@ private:
 
 	bool BoxBoxHit(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 size);					//当たり判定
 
+	int nLife;
+
 	CLine* m_pLine[12];					//デバッグようの線
 };
 

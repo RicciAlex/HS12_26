@@ -44,6 +44,9 @@ HRESULT CResults::Init(void)
 
 	CUIString* pString = CUIString::Create(D3DXVECTOR3((float)SCREEN_WIDTH * 0.40f, (float)SCREEN_HEIGHT * 0.3f, 0.0f), D3DXVECTOR2(350.0f, 50.0f), ColorYellow, "RESULTS", 5);
 
+	//サウンドの再生
+	CApplication::GetSound()->Play(CSound::SOUND_LABEL_BGM_RESULT);
+
 	if (m_pScoreUI != nullptr)
 	{//スコアUIの更新処理
 
@@ -79,7 +82,8 @@ HRESULT CResults::Init(void)
 //終了処理
 void CResults::Uninit(void)
 {
-
+	//サウンドを止める
+	CApplication::GetSound()->Stop();
 }
 
 //更新処理

@@ -26,6 +26,7 @@
 #include "results.h"
 #include "BoxHitbox.h"
 #include "ranking.h"
+#include "tutorial.h"
 
 //静的メンバー変数の宣言
 HWND CApplication::m_hWnd;													//ウインドウ
@@ -336,7 +337,7 @@ void CApplication::SetMode(Mode mode)
 
 	CObject::ReleaseAll();
 	CMeshfield::ClearFields();
-	//CHitbox::ReleaseAll();
+	CHitbox::ReleaseAll();
 
 	if (m_pSound != nullptr)
 	{
@@ -345,14 +346,22 @@ void CApplication::SetMode(Mode mode)
 
 	switch (mode)
 	{
-	
+
 	case CApplication::MODE_TITLE:
 
 	{
 		m_pMode = CTitle::Create();
 	}
 
-		break;
+	break;
+
+	case CApplication::MODE_TUTORIAL:
+
+	{
+		m_pMode = CTutorial::Create();
+	}
+
+	break;
 
 	case CApplication::MODE_FIRST_STAGE:
 
@@ -362,7 +371,7 @@ void CApplication::SetMode(Mode mode)
 		CSilhouette::Create();
 	}
 
-		break;
+	break;
 
 	case CApplication::MODE_RESULTS:
 
