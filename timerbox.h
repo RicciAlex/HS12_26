@@ -4,8 +4,8 @@
 // Author : KADO TAKUMA
 //
 //=============================================================================
-#ifndef _SCOREBOX_H_
-#define _SCOREBOX_H_
+#ifndef _TIMERBOX_H_
+#define _TIMERBOX_H_
 
 //=============================================================================
 // インクルードファイル
@@ -23,14 +23,14 @@
 //=============================================================================
 // クラスの定義
 //=============================================================================
-class CScoreBox : public CObject_2D
+class CTimerBox : public CObject_2D
 {
 public:
 	//--------------------------------
 	// コンストラクタとデストラクタ
 	//--------------------------------
-	CScoreBox();
-	~CScoreBox() override;
+	CTimerBox();
+	~CTimerBox() override;
 
 	//--------------------------------
 	// メンバー関数
@@ -39,7 +39,7 @@ public:
 	void Uninit(void) override;					// 終了処理
 	void Update(void) override;					// 更新処理
 	void Draw(void) override;					// 描画処理
-	static CScoreBox *Create(D3DXVECTOR3 pos);	// スコアボックスの生成関数
+	static CTimerBox *Create(D3DXVECTOR3 pos);	// スコアボックスの生成関数
 	static HRESULT Load(void);					// テクスチャの読み込み関数
 	static void UnLoad(void);					// テクスチャの破棄関数
 
