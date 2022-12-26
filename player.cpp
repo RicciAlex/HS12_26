@@ -30,7 +30,7 @@ const D3DXVECTOR3 CPlayer::m_playerSize = D3DXVECTOR3(15.0f, 60.0f, 15.0f);				/
 const float CPlayer::m_fMouseSafeRadius = 50.0f;
 const float CPlayer::m_fMouseSensibilityCoefficient = 0.001f;
 const float CPlayer::m_fFallLimit = 100.0f;
-const float CPlayer::m_fFrameMove = 1.0f;
+const float CPlayer::m_fFrameMove = 3.0f;
 
 //プレイヤーの色
 D3DXCOLOR CPlayer::m_playerColor[PLAYER_COLOR_MAX]
@@ -276,18 +276,7 @@ void CPlayer::Update(void)
 		//アニメーションの更新
 		m_pAnimator->Update();
 
-		if (m_nPresentInclination != 0 && m_fBalance <= 20.0f && m_fBalance >= -20.0f)
-		{
-			m_nPresentInclination = 0;
-
-			m_pAnimator->SetPresentAnim(STATE_MOVING);
-		}
-		else if (m_nPresentInclination != -1 && m_fBalance > 20.0f)
-		{
-			m_nPresentInclination = -1;
-
-			m_pAnimator->SetPresentAnim(STATE_MOVING_LEFT);
-		}
+		
 	}
 
 	if (m_pos.y <= -1000.0f)
@@ -513,16 +502,7 @@ void CPlayer::PlayerController(void)
 			m_pos.x += m_fFrameMove;
 		}
 
-		/*if (CInputKeyboard::GetKeyboardPress(DIK_W))
-		{
-			m_pos.z += 2.0f;
-		}
-		if (CInputKeyboard::GetKeyboardPress(DIK_S))
-		{
-			m_pos.z -= 2.0f;
-		}*/
-
-		//m_pos.z += m_fFrameMove;
+		m_pos.z += m_fFrameMove;
 
 		ControlBalance();
 	}
@@ -560,8 +540,12 @@ void CPlayer::HitboxEffectUpdate(void)
 
 		if (m_pHitbox->GetScore() < 0)
 		{
-			m_nInvincibilityCnt = 90;
-			m_pHitbox->SetInvincibility(true);
+			if (m_pAnimator && !m_bFall)
+			{
+				m_pAnimator->SetPresentAnim(STATE_FALL);
+			}
+
+			m_bFall = true;
 		}
 
 		m_pHitbox->SetEffect(CHitbox::EFFECT_MAX);
@@ -587,8 +571,12 @@ void CPlayer::HitboxEffectUpdate(void)
 
 		if (m_pHitbox->GetScore() < 0)
 		{
-			m_nInvincibilityCnt = 90;
-			m_pHitbox->SetInvincibility(true);
+			if (m_pAnimator && !m_bFall)
+			{
+				m_pAnimator->SetPresentAnim(STATE_FALL);
+			}
+
+			m_bFall = true;
 		}
 
 		m_pHitbox->SetEffect(CHitbox::EFFECT_MAX);
@@ -602,6 +590,11 @@ void CPlayer::HitboxEffectUpdate(void)
 	case CHitbox::EFFECT_FALL:
 
 	{
+		if (m_pAnimator && !m_bFall)
+		{
+			m_pAnimator->SetPresentAnim(STATE_FALL);
+		}
+
 		m_bFall = true;
 
 		m_move.x = 0.0f;
@@ -652,7 +645,12 @@ void CPlayer::ControlBalance(void)
 
 	if (m_fBalance >= m_fFallLimit || m_fBalance <= -m_fFallLimit)
 	{
-		//m_bFall = true;
+		if (m_pAnimator && !m_bFall)
+		{
+			m_pAnimator->SetPresentAnim(STATE_FALL);
+		}
+
+		m_bFall = true;
 	}
 
 	CDebugProc::Print("\n\n Balance: %f", m_fBalance);

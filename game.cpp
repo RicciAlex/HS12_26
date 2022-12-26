@@ -12,6 +12,7 @@
 #include "player.h"
 #include "score.h"
 #include "inputKeyboard.h"
+#include "hitbox.h"
 
 CScore* CGame::m_pScore = nullptr;
 

@@ -46,8 +46,7 @@ public:
 	{
 		STATE_NEUTRAL = 0,						//ƒjƒ…[ƒgƒ‰ƒ‹
 		STATE_MOVING,							//ˆÚ“®
-		STATE_MOVING_LEFT,						//ˆÚ“®(¶)
-		//STATE_MOVING,							//‘–‚é
+		STATE_FALL,							//‘–‚é
 		
 		STATE_MAX								
 	};

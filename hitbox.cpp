@@ -9,6 +9,8 @@
 //インクルードファイル
 //=============================================================================
 #include "hitbox.h"
+#include "application.h"
+#include "camera.h"
 
 //=============================================================================
 //
@@ -345,6 +347,8 @@ void CHitbox::IgnoreAllCollision(void)
 		m_response[nCnt] = RESPONSE_IGNORE;
 	}
 }
+
+
 
 
 

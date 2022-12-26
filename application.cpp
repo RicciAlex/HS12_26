@@ -336,7 +336,7 @@ void CApplication::SetMode(Mode mode)
 
 	CObject::ReleaseAll();
 	CMeshfield::ClearFields();
-	//CHitbox::ReleaseAll();
+	CHitbox::ReleaseAll();
 
 	if (m_pSound != nullptr)
 	{

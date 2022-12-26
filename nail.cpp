@@ -57,7 +57,10 @@ void CNail::Uninit(void)
 //XVˆ—
 void CNail::Update(void)
 {
-
+	if (GetPos().z <= CApplication::GetCamera()->GetPos().z - 500.0f)
+	{
+		Release();
+	}
 }
 
 //•`‰æˆ—

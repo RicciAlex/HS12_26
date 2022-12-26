@@ -66,8 +66,12 @@ public:
 private:
 	void SetVertex(void);								//頂点座標とインデックスの設定処理
 	void LoadVertex(char* pPass);								//頂点情報のロード処理
+	void AddNewField(void);
 
 	static const int MAX_FIELD_PRIORITY = 2;
+	static const int FIELD_NUM = 6;
+	static char* m_pFieldPass[FIELD_NUM];
+	static const D3DXVECTOR2 m_fFieldSize;
 
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;					//頂点バッファへのポインタ
 	LPDIRECT3DINDEXBUFFER9 m_pIdxBuff;					//インデックスバッファへのポインタ
