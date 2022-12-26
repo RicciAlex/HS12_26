@@ -63,7 +63,12 @@ public:
 		TEXTURE_COUNTDOWN_3,
 		TEXTURE_COUNTDOWN_2,
 		TEXTURE_COUNTDOWN_1,
-
+		TEXTURE_RESULT,
+		TEXTURE_START,
+		TEXTURE_TUTORIAL,
+		TEXTURE_BACK,
+		TEXTURE_AGAIN,
+		TEXTURE_TITLE_LOGO,
 		TEXTURE_TYPE_MAX
 	};
 
@@ -72,20 +77,20 @@ public:
 	CObject();											//コンストラクタ
 	CObject(int nPriority);								//コンストラクタ (1 <= priority <= 5)
 	virtual~CObject();									//デストラクタ
-														
+
 	virtual HRESULT Init(void) = 0;						//初期化処理
 	virtual void Uninit(void) = 0;						//終了処理
 	virtual void Update(void) = 0;						//更新処理
 	virtual void Draw(void) = 0;						//描画処理
-														
+
 	virtual void SetPos(const D3DXVECTOR3 pos) = 0;		//位置の設定処理
-	
+
 	void Release(void);									//インスタンス一つの終了処理
-	//virtual const D3DXVECTOR2 GetSize(void) = 0;		//サイズの取得処理
+														//virtual const D3DXVECTOR2 GetSize(void) = 0;		//サイズの取得処理
 	virtual const D3DXVECTOR3 GetPos(void) = 0;			//位置の取得処理
 	void SetPriority(int nPriority);					//プライオリティの設定処理
-														
-	//静的関数
+
+														//静的関数
 	static void ReleaseAll(void);						//全部の終了処理
 	static void UpdateAll(void);						//全部の更新処理
 	static void DrawAll(void);							//全部の描画処理
@@ -93,7 +98,7 @@ public:
 
 	static int random(const int low, const int high);	//乱数を返す処理
 
-private:								
+private:
 
 	static const int Max_Priority = 5;					//プライオリティの最大値
 	int m_nIdx;											//このインスタンスの配列のインデックス

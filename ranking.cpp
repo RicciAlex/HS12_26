@@ -40,12 +40,36 @@ HRESULT CRanking::Init(void)
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
+	//初期化
+	m_nCounter = 0;
+	m_nSelect = 0;
+
 	//ポリゴンの生成
-	m_pObj2D = CObject_2D::Create();
-	m_pObj2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f));
-	m_pObj2D->SetSize(D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 5));
-	//m_pObj2D->SetTexture(CObject::TEXTURE_RANKING);
-	m_pObj2D->SetPriority(5);
+	m_pObj2D[0] = CObject_2D::Create();
+	m_pObj2D[0]->SetPos(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f));
+	m_pObj2D[0]->SetSize(D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 5));
+	m_pObj2D[0]->SetTexture(CObject::TEXTURE_RANKING);
+	m_pObj2D[0]->SetPriority(5);
+
+	m_pObj2D[1] = CObject_2D::Create();
+	m_pObj2D[1]->SetPos(D3DXVECTOR3(900.0f, 620.0f, 0.0f));
+	m_pObj2D[1]->SetSize(D3DXVECTOR2(200.0f, 50.0f));
+	m_pObj2D[1]->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
+	m_pObj2D[1]->SetTexture(CObject::TEXTURE_BACK);
+	m_pObj2D[1]->SetPriority(5);
+
+	m_pObj2D[2] = CObject_2D::Create();
+	m_pObj2D[2]->SetPos(D3DXVECTOR3(300.0f, 620.0f,0.0f));
+	m_pObj2D[2]->SetSize(D3DXVECTOR2(200.0f, 50.0f));
+	m_pObj2D[2]->SetTexture(CObject::TEXTURE_AGAIN);
+	m_pObj2D[2]->SetPriority(5);
+
+	//順位
+	m_pScoreUI = CUIString::Create(D3DXVECTOR3(200.0f, 100.0f, 0.0f), D3DXVECTOR2(150.0f, 50.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), "1st", 5);
+	m_pScoreUI = CUIString::Create(D3DXVECTOR3(200.0f, 200.0f, 0.0f), D3DXVECTOR2(150.0f, 50.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), "2nd", 5);
+	m_pScoreUI = CUIString::Create(D3DXVECTOR3(200.0f, 300.0f, 0.0f), D3DXVECTOR2(150.0f, 50.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), "3rd", 5);
+	m_pScoreUI = CUIString::Create(D3DXVECTOR3(200.0f, 400.0f, 0.0f), D3DXVECTOR2(150.0f, 50.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), "4th", 5);
+	m_pScoreUI = CUIString::Create(D3DXVECTOR3(200.0f, 500.0f, 0.0f), D3DXVECTOR2(150.0f, 50.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), "5th", 5);
 
 	//ファイル読み込み処理
 	Load();
@@ -59,11 +83,13 @@ HRESULT CRanking::Init(void)
 void CRanking::Uninit(void)
 {
 	//StopSound();
-
-	if (m_pObj2D != nullptr)
+	for (int nCnt = 0; nCnt < MAX_POLIGON; nCnt++)
 	{
-		m_pObj2D->Uninit();
-		m_pObj2D = nullptr;
+		if (m_pObj2D[nCnt] != nullptr)
+		{
+			m_pObj2D[nCnt]->Uninit();
+			m_pObj2D[nCnt] = nullptr;
+		}
 	}
 
 	if (m_pScoreUI != nullptr)
@@ -78,11 +104,54 @@ void CRanking::Uninit(void)
 //======================================================
 void CRanking::Update(void)
 {
-	//キー入力
-	if (CInputKeyboard::GetKeyboardTrigger(DIK_RETURN))
+	if ((CInputKeyboard::GetKeyboardTrigger(DIK_D) || CInputKeyboard::GetKeyboardTrigger(DIK_RIGHT)))
+	{//Dキーが押された
+		if (m_nSelect < 1)
+		{
+			m_nSelect++;
+			m_pObj2D[m_nSelect + 1]->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
+		}
+	}
+	else if ((CInputKeyboard::GetKeyboardTrigger(DIK_A) || CInputKeyboard::GetKeyboardTrigger(DIK_LEFT)))
+	{//Aキーが押された
+		if (m_nSelect > 0)
+		{
+			m_pObj2D[m_nSelect]->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
+			m_nSelect--;
+		}
+	}
+
+	switch (m_nSelect)
 	{
-		Save();
-		CApplication::SetFade(CApplication::MODE_TITLE);
+	case 0:
+		if (m_pObj2D[2] != nullptr)
+		{
+			//選択しているポリゴンを半透明にする
+			m_pObj2D[2]->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		}
+		//決定キー(ENTERキー)が押されたかどうか
+		if (CInputKeyboard::GetKeyboardTrigger(DIK_RETURN))
+		{
+			//モード設定
+			Save();
+			CApplication::SetFade(CApplication::MODE_FIRST_STAGE);
+		}
+		break;
+
+	case 1:
+		if (m_pObj2D[1] != nullptr)
+		{
+			//選択しているポリゴンを半透明にする
+			m_pObj2D[1]->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		}
+		//決定キー(ENTERキー)が押されたかどうか
+		if (CInputKeyboard::GetKeyboardTrigger(DIK_RETURN))
+		{
+			//モード設定
+			Save();
+			CApplication::SetFade(CApplication::MODE_TITLE);
+		}
+		break;
 	}
 }
 
@@ -206,7 +275,7 @@ void CRanking::SetRankingScore()
 		pStr[nCntScore] = begin[nCntScore].c_str();
 
 		//UIの生成
-		m_pScoreUI = CUIString::Create(D3DXVECTOR3(800.0f,50.0f + (150.0f * nCntScore), 0.0f), D3DXVECTOR2(150.0f, 50.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), pStr[nCntScore], 5);
+		m_pScoreUI = CUIString::Create(D3DXVECTOR3(500.0f,100.0f + (100.0f * nCntScore), 0.0f), D3DXVECTOR2(500.0f, 50.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), pStr[nCntScore], 5);
 	}
 }
 
