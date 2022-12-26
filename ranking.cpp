@@ -181,17 +181,17 @@ void CRanking::SetRankingScore()
 	for (int nCntScore = 0; nCntScore < MAX_RANKING_RANK; nCntScore++)
 	{
 		//配列の確保
-		int nScore[5] = {};
-		std::string str[5] = {};
-		std::string begin[5] = {};
-		const char* pStr[5] = {};
+		int nScore[MAX_RANKING_RANK] = {};
+		std::string str[MAX_RANKING_RANK] = {};
+		std::string begin[MAX_RANKING_RANK] = {};
+		const char* pStr[MAX_RANKING_RANK] = {};
 		//スコアを取得して、8桁の文字列に変換する
 		nScore[nCntScore] = m_nData[nCntScore];
 		str[nCntScore] = std::to_string(nScore[nCntScore]);
 
-		if (str[nCntScore].size() < 8)
+		if (str[nCntScore].size() < MAX_RANKING)
 		{
-			for (int nCnt = 0; nCnt < 8 - (int)str[nCntScore].size(); nCnt++)
+			for (int nCnt = 0; nCnt < MAX_RANKING - (int)str[nCntScore].size(); nCnt++)
 			{
 				begin[nCntScore] += '0';
 			}
