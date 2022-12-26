@@ -48,7 +48,7 @@ HRESULT CTitle::Init(void)
 	m_pObj2D[0]->SetPos(D3DXVECTOR3(600.0f, 300.0f, 0.0f));
 	m_pObj2D[0]->SetSize(D3DXVECTOR2(400.0f, 100.0f));
 	m_pObj2D[0]->SetTexture(CObject::TEXTURE_TITLE_LOGO);
-	m_pObj2D[0]->SetPriority(4);
+	m_pObj2D[0]->SetPriority(5);
 
 	m_pObj2D[1]->SetPos(D3DXVECTOR3(900.0f, 620.0f, 0.0f));
 	m_pObj2D[1]->SetSize(D3DXVECTOR2(200.0f, 50.0f));
@@ -60,6 +60,12 @@ HRESULT CTitle::Init(void)
 	m_pObj2D[2]->SetSize(D3DXVECTOR2(200.0f, 50.0f));
 	m_pObj2D[2]->SetTexture(CObject::TEXTURE_START);
 	m_pObj2D[2]->SetPriority(5);
+
+	m_pObj2D[3] = CObject_2D::Create();
+	m_pObj2D[3]->SetPos(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f));
+	m_pObj2D[3]->SetSize(D3DXVECTOR2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 5));
+	m_pObj2D[3]->SetTexture(CObject::TEXTURE_TITLE001);
+	m_pObj2D[3]->SetPriority(4);
 
 	/*CAnimateUI::UIAnimation animInfo;
 	animInfo.deltaSize = D3DXVECTOR2(0.5f, 0.25f);

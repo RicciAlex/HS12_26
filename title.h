@@ -18,7 +18,7 @@
 class CObject_2D;
 
 //マクロ定義
-#define MAX_TITLE			(3)			//ポリゴンの最大数
+#define MAX_TITLE			(4)			//ポリゴンの最大数
 
 class CTitle : public CMode
 {
