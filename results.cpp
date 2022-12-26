@@ -38,7 +38,7 @@ HRESULT CResults::Init(void)
 
 	pObj->SetPos(D3DXVECTOR3((float)SCREEN_WIDTH * 0.5f, (float)SCREEN_WIDTH * 0.5f, 0.0f));
 	pObj->SetSize(D3DXVECTOR2((float)SCREEN_WIDTH * 0.5f, (float)SCREEN_WIDTH * 0.5f));
-	pObj->SetColor(ColorCyan);
+	pObj->SetTexture(CObject::TEXTURE_RESULT);
 	pObj->SetPriority(4);
 
 	CUIString* pString = CUIString::Create(D3DXVECTOR3((float)SCREEN_WIDTH * 0.40f, (float)SCREEN_HEIGHT * 0.3f, 0.0f), D3DXVECTOR2(350.0f, 50.0f), ColorYellow, "RESULTS", 5);
@@ -57,7 +57,7 @@ void CResults::Update(void)
 {
 	if (CInputKeyboard::GetKeyboardTrigger(DIK_RETURN))
 	{
-		CApplication::SetFade(CApplication::MODE_TITLE);
+		CApplication::SetFade(CApplication::MODE_RANKING);
 	}
 }
 

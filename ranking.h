@@ -15,9 +15,9 @@ class CFade;
 class CUIString;
 
 //マクロ定義
-#define MAX_RANKING			(8)        //ランキングの桁数
-#define MAX_RANKING_RANK    (5)        //ランキングの順位分
-#define MAX_TEXTURE			(4)        //テクスチャの数
+#define MAX_RANKING			(8)			//ランキングの桁数
+#define MAX_RANKING_RANK    (5)			//ランキングの順位分
+#define MAX_POLIGON			(3)			//ポリゴンの最大数
 
 //ランキングクラス
 class CRanking : public CMode
@@ -37,11 +37,13 @@ public:
 	static CRanking *Create();    //ランキングの生成
 
 private:
-	CObject_2D* m_pObj2D;
-	CUIString* m_pScoreUI;
-	CFade *m_pFade;
 	static int m_nRanking;
 	static int m_nData[MAX_RANKING_RANK];
+	CObject_2D* m_pObj2D[MAX_POLIGON];
+	CUIString* m_pScoreUI;
+	CFade *m_pFade;
+	int m_nCounter;									//点滅時間
+	int m_nSelect;									//選んでいる番号
 };
 
 #endif;

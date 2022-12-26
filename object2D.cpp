@@ -18,10 +18,24 @@ LPDIRECT3DTEXTURE9 CObject_2D::m_pTextureAll[CObject_2D::TEXTURE_TYPE_MAX] = {};
 char* CObject_2D::m_paTextPass[CObject::TEXTURE_TYPE_MAX] =
 {
 	" ",												//TEXTURE_NULL,
+
 	"data\\TEXTURE\\Characters.png",					//TEXTURE_CHARACTERS,
-	"data\\TEXTURE\\Block.png",							//TEXTURE_BLOCK,													
+	"data\\TEXTURE\\Block.png",							//TEXTURE_BLOCK,
 	"data\\TEXTURE\\TemporaryTitle.png",				//TEXTURE_TITLE,
 	"data\\TEXTURE\\number000.png",						//TEXTURE_NUMBERS,
+	"data\\TEXTURE\\ranking.png",						//TEXTURE_RANKING,
+	"data\\TEXTURE\\ScoreBox.png",						//TEXTURE_SCOREBOX,
+	"data\\TEXTURE\\TimerBox.png",						//TEXTURE_TIMERBOX,
+	"data\\TEXTURE\\CountDown_0.png",					//TEXTURE_TIMERBOX,
+	"data\\TEXTURE\\CountDown_3.png",					//TEXTURE_TIMERBOX,
+	"data\\TEXTURE\\CountDown_2.png",					//TEXTURE_TIMERBOX,
+	"data\\TEXTURE\\CountDown_1.png",					//TEXTURE_TIMERBOX,
+	"data\\TEXTURE\\result.png",						//TEXTURE_RESULT,
+	"data\\TEXTURE\\start.png",							//TEXTURE_START,
+	"data\\TEXTURE\\tutorial.png",						//TEXTURE_TUTORIAL,
+	"data\\TEXTURE\\title.png",							//TEXTURE_BACK,
+	"data\\TEXTURE\\again.png",							//TEXTURE_AGAIN,
+	"data\\TEXTURE\\title_logo.png",					//TEXTURE_TITLELOGO.
 };
 
 //=============================================================================
@@ -310,7 +324,7 @@ void CObject_2D::SetPos(const D3DXVECTOR3 pos)
 
 	VERTEX_2D* pVtx = nullptr;					//頂点情報へのポインタ
 
-												//頂点バッファをロックする
+	//頂点バッファをロックする
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	float dim = sqrtf((m_size.x * m_size.x) + (m_size.y * m_size.y));
@@ -581,7 +595,7 @@ void CObject_2D::SetColor(const D3DXCOLOR col)
 		m_VtxCol[nCnt] = col;
 	}
 
-															//頂点バッファのロック
+	//頂点バッファのロック
 	pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//カラーの設定
