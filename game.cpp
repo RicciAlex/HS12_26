@@ -66,12 +66,6 @@ void CGame::Uninit(void)
 //XVˆ—
 void CGame::Update(void)
 {
-	//if (CInputKeyboard::GetKeyboardPress(DIK_M))
-	//{
-	//	m_pScore->AddScore(1);
-	//}
-
-
 }
 
 
