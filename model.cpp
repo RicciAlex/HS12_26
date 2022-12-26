@@ -36,6 +36,10 @@ char*			CModel::m_pModelPass[MODEL_MAX] =
 	{ "data\\MODELS\\Player\\Saya.x" },							//MODEL_SAYA,
 	{ "data\\MODELS\\Player\\Katana.x" },						//MODEL_KATANA,
 
+	{ "data\\MODELS\\Obstacle\\8InchNails.x" },					//MODEL_NAILS,
+	{ "data\\MODELS\\Obstacle\\SpikeBase.x" },					//MODEL_SPIKE_BASE,
+	{ "data\\MODELS\\Obstacle\\SpikeTrap.x" },					//MODEL_SPIKE_TRAP,
+
 	
 };
 
