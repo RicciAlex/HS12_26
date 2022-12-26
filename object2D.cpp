@@ -29,7 +29,6 @@ char* CObject_2D::m_paTextPass[CObject::TEXTURE_TYPE_MAX] =
 	"data\\TEXTURE\\CountDown_3.png",					//TEXTURE_TIMERBOX,
 	"data\\TEXTURE\\CountDown_2.png",					//TEXTURE_TIMERBOX,
 	"data\\TEXTURE\\CountDown_1.png",					//TEXTURE_TIMERBOX,
-
 	"data\\TEXTURE\\result.png",						//TEXTURE_RESULT,
 	"data\\TEXTURE\\start.png",							//TEXTURE_START,
 	"data\\TEXTURE\\tutorial.png",						//TEXTURE_TUTORIAL,

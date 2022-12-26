@@ -8,46 +8,46 @@
 #define OBJECT_H
 
 //=============================================================================
-//インクルードファイル
+//�C���N���[�h�t�@�C��
 //=============================================================================
 #include "main.h"
 
 //=============================================================================
-//前方宣言
+//�O���錾
 //=============================================================================
 class CPlayer;
 
 //=============================================================================
-// オブジェクトクラス
+// �I�u�W�F�N�g�N���X
 //=============================================================================
 class CObject
 {
 public:
 
-	// 頂点データ
+	// ���_�f�[�^
 	struct VERTEX_2D
 	{
-		D3DXVECTOR3 pos;			//xyz座標
+		D3DXVECTOR3 pos;			//xyz���W
 		float rhw;					//rhw
-		D3DCOLOR col;				//カーラー
-		D3DXVECTOR2 tex;			//テクスチャ座標
+		D3DCOLOR col;				//�J�[���[
+		D3DXVECTOR2 tex;			//�e�N�X�`�����W
 	};
 
 	struct VERTEX_3D
 	{
-		D3DXVECTOR3 pos;			//xyz座標
-		D3DXVECTOR3 nor;			//法線
-		D3DCOLOR col;				//カーラー
-		D3DXVECTOR2 tex;			//テクスチャ座標
+		D3DXVECTOR3 pos;			//xyz���W
+		D3DXVECTOR3 nor;			//�@��
+		D3DCOLOR col;				//�J�[���[
+		D3DXVECTOR2 tex;			//�e�N�X�`�����W
 	};
 
 	struct VERTEX_LINE
 	{
-		D3DXVECTOR3 pos;			//xyz座標
-		D3DCOLOR col;				//カーラー
+		D3DXVECTOR3 pos;			//xyz���W
+		D3DCOLOR col;				//�J�[���[
 	};
 
-	//テクスチャの種類
+	//�e�N�X�`���̎��
 	enum TextType
 	{
 		TEXTURE_NULL = 0,
@@ -55,55 +55,60 @@ public:
 		TEXTURE_CHARACTERS,
 		TEXTURE_BLOCK,
 		TEXTURE_TITLE,
-		TEXTURE_RANKING,
 		TEXTURE_NUMBERS,
+		TEXTURE_RANKING,
 		TEXTURE_SCOREBOX,
 		TEXTURE_TIMERBOX,
 		TEXTURE_COUNTDOWN_0,
 		TEXTURE_COUNTDOWN_3,
 		TEXTURE_COUNTDOWN_2,
 		TEXTURE_COUNTDOWN_1,
-
+		TEXTURE_RESULT,
+		TEXTURE_START,
+		TEXTURE_TUTORIAL,
+		TEXTURE_BACK,
+		TEXTURE_AGAIN,
+		TEXTURE_TITLE_LOGO,
 		TEXTURE_TYPE_MAX
 	};
 
-	static const int MaxObject = 5000;					//オブジェクトの最大数
+	static const int MaxObject = 5000;					//�I�u�W�F�N�g�̍ő吔
 
-	CObject();											//コンストラクタ
-	CObject(int nPriority);								//コンストラクタ (1 <= priority <= 5)
-	virtual~CObject();									//デストラクタ
-														
-	virtual HRESULT Init(void) = 0;						//初期化処理
-	virtual void Uninit(void) = 0;						//終了処理
-	virtual void Update(void) = 0;						//更新処理
-	virtual void Draw(void) = 0;						//描画処理
-														
-	virtual void SetPos(const D3DXVECTOR3 pos) = 0;		//位置の設定処理
-	
-	void Release(void);									//インスタンス一つの終了処理
-	//virtual const D3DXVECTOR2 GetSize(void) = 0;		//サイズの取得処理
-	virtual const D3DXVECTOR3 GetPos(void) = 0;			//位置の取得処理
-	void SetPriority(int nPriority);					//プライオリティの設定処理
-														
-	//静的関数
-	static void ReleaseAll(void);						//全部の終了処理
-	static void UpdateAll(void);						//全部の更新処理
-	static void DrawAll(void);							//全部の描画処理
-	static CObject** GetObj(void);						//オブジェクトの取得処理
+	CObject();											//�R���X�g���N�^
+	CObject(int nPriority);								//�R���X�g���N�^ (1 <= priority <= 5)
+	virtual~CObject();									//�f�X�g���N�^
 
-	static int random(const int low, const int high);				//乱数を返す処理
+	virtual HRESULT Init(void) = 0;						//����������
+	virtual void Uninit(void) = 0;						//�I������
+	virtual void Update(void) = 0;						//�X�V����
+	virtual void Draw(void) = 0;						//�`�揈��
 
-private:								
+	virtual void SetPos(const D3DXVECTOR3 pos) = 0;		//�ʒu�̐ݒ菈��
 
-	static const int Max_Priority = 5;					//プライオリティの最大値
-	int m_nIdx;											//このインスタンスの配列のインデックス
-	int m_nPriority;									//描画順
-	bool m_bDeath;										//死亡フラグ
+	void Release(void);									//�C���X�^���X��̏I������
+														//virtual const D3DXVECTOR2 GetSize(void) = 0;		//�T�C�Y�̎擾����
+	virtual const D3DXVECTOR3 GetPos(void) = 0;			//�ʒu�̎擾����
+	void SetPriority(int nPriority);					//�v���C�I���e�B�̐ݒ菈��
 
-	static CObject* m_pTop[Max_Priority];				//先頭のオブジェクトへのポイン
-	static CObject* m_pCurrent[Max_Priority];			//現在(一番後ろ)のオブジェクトへのポンタ
-	CObject* m_pPrev;									//前のオブジェクトへのポンタ
-	CObject* m_pNext;									//次のオブジェクトへのポンタ
+														//�ÓI�֐�
+	static void ReleaseAll(void);						//�S���̏I������
+	static void UpdateAll(void);						//�S���̍X�V����
+	static void DrawAll(void);							//�S���̕`�揈��
+	static CObject** GetObj(void);						//�I�u�W�F�N�g�̎擾����
+
+	static int random(const int low, const int high);				//������Ԃ�����
+
+private:
+
+	static const int Max_Priority = 5;					//�v���C�I���e�B�̍ő�l
+	int m_nIdx;											//���̃C���X�^���X�̔z��̃C���f�b�N�X
+	int m_nPriority;									//�`�揇
+	bool m_bDeath;										//���S�t���O
+
+	static CObject* m_pTop[Max_Priority];				//�擪�̃I�u�W�F�N�g�ւ̃|�C��
+	static CObject* m_pCurrent[Max_Priority];			//����(��Ԍ��)�̃I�u�W�F�N�g�ւ̃|���^
+	CObject* m_pPrev;									//�O�̃I�u�W�F�N�g�ւ̃|���^
+	CObject* m_pNext;									//���̃I�u�W�F�N�g�ւ̃|���^
 };
 
 #endif

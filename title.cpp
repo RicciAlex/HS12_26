@@ -46,7 +46,7 @@ HRESULT CTitle::Init(void)
 	}
 	//ƒ|ƒŠƒSƒ“‚ÌÝ’è
 	m_pObj2D[0]->SetPos(D3DXVECTOR3(600.0f, 300.0f, 0.0f));
-	m_pObj2D[0]->SetSize(D3DXVECTOR2(300.0f, 100.0f));
+	m_pObj2D[0]->SetSize(D3DXVECTOR2(400.0f, 100.0f));
 	m_pObj2D[0]->SetTexture(CObject::TEXTURE_TITLE_LOGO);
 	m_pObj2D[0]->SetPriority(4);
 
