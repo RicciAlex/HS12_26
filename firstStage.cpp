@@ -50,11 +50,18 @@ HRESULT CFirstStage::Init(void)
 	nCntEnd = 0;
 
 	SetPlayer(pPlayer);
+	CMeshfield* pField = nullptr;
+	pField = CMeshfield::Create(D3DXVECTOR3(-250.0f, -200.0f, 500.0f), Vec3Null, D3DXVECTOR2(50.0f, 50.0f), 11, 20);
+	pField->SetTexture(CObject::TEXTURE_BLOCK);
+	pField->SetTextureTiling(0.25f);
 
-	CMeshfield::Create(D3DXVECTOR3(-250.0f, -200.0f, 500.0f), Vec3Null, D3DXVECTOR2(50.0f, 50.0f), 11, 20);
-	CMeshfield::Create(D3DXVECTOR3(-250.0f, -200.0f, 1500.0f), Vec3Null, "data\\MeshField\\SlopePitFall_Stage_01.txt", 3);
-	CMeshfield::Create(D3DXVECTOR3(-250.0f, -200.0f, 2500.0f), Vec3Null, "data\\MeshField\\PitFall_Stage_01.txt", 3);
-	//CMeshfield::Create(D3DXVECTOR3(-250.0f, -200.0f, 500.0f), Vec3Null, "data\\MeshField\\PitFall_Stage_01.txt", 3);
+	pField = CMeshfield::Create(D3DXVECTOR3(-250.0f, -200.0f, 1500.0f), Vec3Null, "data\\MeshField\\SlopePitFall_Stage_01.txt", 3);
+	pField->SetTexture(CObject::TEXTURE_BLOCK);
+	pField->SetTextureTiling(0.25f);
+
+	pField = CMeshfield::Create(D3DXVECTOR3(-250.0f, -200.0f, 2500.0f), Vec3Null, "data\\MeshField\\PitFall_Stage_01.txt", 3);
+	pField->SetTexture(CObject::TEXTURE_BLOCK);
+	pField->SetTextureTiling(0.25f);
 
 	CBoxHitbox::Create(D3DXVECTOR3(0.0f, -410.0f, 1500.0f - 500.0f), Vec3Null, D3DXVECTOR3(150.0f, 270.0f, 150.0f), CHitbox::TYPE_FALL, nullptr, -1, CHitbox::EFFECT_FALL);
 
@@ -111,7 +118,7 @@ void CFirstStage::Update(void)
 
 		if (nCntEnd >= 29)
 		{
-			CApplication::SetFade(CApplication::MODE_RESULTS);
+			CApplication::SetFade(CApplication::MODE_RANKING);
 		}
 	}
 
@@ -119,7 +126,7 @@ void CFirstStage::Update(void)
 
 	if (CInputKeyboard::GetKeyboardTrigger(DIK_O))
 	{
-		CApplication::SetFade(CApplication::MODE_RESULTS);
+		CApplication::SetFade(CApplication::MODE_RANKING);
 	}
 
 #endif // DEBUG
