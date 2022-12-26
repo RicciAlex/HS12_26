@@ -30,27 +30,25 @@ public:
 	{
 		BODY = 0,								//体
 		HEAD,									//頭
-		LEFT_ARM,								//左腕
-		LEFT_HAND,								//左手
 		RIGHT_ARM,								//右腕
 		RIGHT_HAND,								//右手
-		LEFT_LEG,								//左足
-		LEFT_FOOT,								//左太腿
+		LEFT_ARM,								//左腕
+		LEFT_HAND,								//左手
 		RIGHT_LEG,								//右足
 		RIGHT_FOOT,								//右太腿
-		SAYA,									//鞘
-		KATANA,									//刀
+		LEFT_LEG,								//左足
+		LEFT_FOOT,								//左太腿
+		
 		PARTS_MAX
 	};
 
 	enum STATE
 	{
 		STATE_NEUTRAL = 0,						//ニュートラル
-		STATE_RUNNING,							//走る
-		STATE_JUMP_START,
-		STATE_JUMP,								//ジャンプ
-		STATE_ATTACK,							//攻撃
-		STATE_DAMAGE,							//ダメージ
+		STATE_MOVING,							//移動
+		STATE_MOVING_LEFT,						//移動(左)
+		//STATE_MOVING,							//走る
+		
 		STATE_MAX								
 	};
 
@@ -99,6 +97,7 @@ private:
 	static const float m_fMouseSensibilityCoefficient;		
 	static const float m_fFallLimit;
 	static const int   m_nFrameBalanceRange = 5;
+	static const float m_fFrameMove;
 
 	void RespawnPlayer(void);											//リスポーン処理
 	void HitboxEffectUpdate(void);										//当たった後の反応処理
@@ -117,6 +116,7 @@ private:
 	int			m_nInvincibilityCnt;									//無敵状態のカウンター
 	int			m_nCntBalance;											//バランスカウンター
 	int			m_nBalanceChangeTime;									//バランスが変わるフレーム
+	int			m_nPresentInclination;
 	float		m_fFrictionCoeff;										//摩擦係数
 	float		m_fBalance;												//バランス変数
 	float		m_fFrameBalance;										//毎フレーム加算されているバランスの値
