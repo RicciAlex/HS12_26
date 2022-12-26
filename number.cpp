@@ -51,7 +51,7 @@ HRESULT CNumber::Init(void)
 	SetTexture(CObject::TEXTURE_NUMBERS);
 
 	//テクスチャ座標初期化
-	float fShiftWidth = 1.0f / 10;
+	float fShiftWidth = 1.0f / 10.0f;
 
 	SetTextureParameter(1, 10, 1, INT_MAX);
 	SetAnimPattern(0);
@@ -73,7 +73,9 @@ void CNumber::Uninit(void)
 //=============================================================================
 void CNumber::Update(void)
 {
+	this;
 
+	int a = 0;
 }
 
 //=============================================================================
@@ -104,6 +106,7 @@ CNumber *CNumber::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size)
 		pNumber->Init();
 		pNumber->SetSize(size);
 		pNumber->SetPos(pos);
+		pNumber->SetColor(ColorMagenta);
 	}
 	else
 	{//ポインタが虚無だったら実行

@@ -16,6 +16,7 @@
 //前方宣言
 //=============================================================================
 class CPlayer;
+class CScore;
 
 
 class CGame : public CMode
@@ -39,10 +40,12 @@ public:
 
 	void SetPlayer(CPlayer* pPlayer);		//プレイヤーの設定処理
 	CPlayer* GetPlayer(void);				//プレイヤーの取得処理
+	static CScore* GetScore() { return m_pScore; }
 
 private:
 
 	CPlayer* m_pPlayer;
+	static CScore* m_pScore;
 
 };
 

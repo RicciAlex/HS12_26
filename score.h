@@ -52,8 +52,8 @@ public:
 	void CalcDigit(int nScore);										// 桁数を計算する処理
 
 	//void VtxUpdate() override {};									// 頂点座標更新処理
-	void SetPos(D3DXVECTOR3 pos) override;							// 座標設定処理
-	//void SetSize(D3DXVECTOR2 size) override { m_size = size; };		// サイズ設定処理
+	void SetPos(const D3DXVECTOR3 pos) override;					// 座標設定処理
+	void SetSize(D3DXVECTOR2 size)  { m_size = size; };		// サイズ設定処理
 	//void SetMove(D3DXVECTOR3 move) override { D3DXVECTOR3 i = move; };	// 移動量設定処理
 	//void SetCol(D3DXCOLOR col) override { D3DXCOLOR i = col; };			// 色設定処理
 	//void SetRot(D3DXVECTOR3 rot) override { D3DXVECTOR3 i = rot; };	// 向き設定処理
@@ -61,7 +61,7 @@ public:
 	void SetCalcDigit(bool bCalcDigit) { m_bCalcDigit = bCalcDigit; }
 
 	const D3DXVECTOR3 GetPos(void) override { return m_pos; }				// 座標取得処理
-	//D3DXVECTOR2 GetSize(void) override { return m_size; }			// サイズ取得処理
+	D3DXVECTOR2 GetSize(void)  { return m_size; }			// サイズ取得処理
 	//D3DXVECTOR3 GetMove(void) override { return D3DXVECTOR3(); }	// 移動量取得処理
 	//D3DXVECTOR3 GetRot(void) override { return D3DXVECTOR3(); }		// 向き取得処理
 	//D3DXCOLOR GetCol(void) override { return D3DXCOLOR(); }			// 色取得処理

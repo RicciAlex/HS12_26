@@ -70,8 +70,8 @@ void CScore::Uninit()
 		}
 	}
 
-	//インスタンスの解放処理
-	Release();
+	////インスタンスの解放処理
+	//Release();
 }
 
 //=============================================================================
@@ -79,14 +79,14 @@ void CScore::Uninit()
 //=============================================================================
 void CScore::Update()
 {
-	////スコアを目的の値まで1ずつ増やす処理
-	//if (m_nSaveScore > m_nScore)
-	//{
-	//	for (int nCnt = 0; nCnt < 3; nCnt++)
-	//	{
-	//		CGame::GetScore()->AddScore(1);
-	//	}
-	//}
+	//スコアを目的の値まで1ずつ増やす処理
+	if (m_nSaveScore > m_nScore)
+	{
+		for (int nCnt = 0; nCnt < 3; nCnt++)
+		{
+			CGame::GetScore()->AddScore(1);
+		}
+	}
 }
 
 //=============================================================================
@@ -112,7 +112,7 @@ CScore * CScore::Create(bool bCalcDigit, int nScore, int nDigit, D3DXVECTOR3 pos
 	{//ポインタが存在したら実行
 		pScore->SetDigit(nDigit);
 		pScore->SetPos(pos);
-		//pScore->SetSize(size);
+		pScore->SetSize(size);
 		pScore->SetCalcDigit(bCalcDigit);
 		pScore->Init();
 		pScore->SetScore(nScore);
