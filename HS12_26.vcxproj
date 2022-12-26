@@ -190,9 +190,12 @@
     <ClCompile Include="rendering.cpp" />
     <ClCompile Include="results.cpp" />
     <ClCompile Include="score.cpp" />
+    <ClCompile Include="scorebox.cpp" />
     <ClCompile Include="silhouette.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="spikeTrap.cpp" />
+    <ClCompile Include="timer.cpp" />
+    <ClCompile Include="timerbox.cpp" />
     <ClCompile Include="title.cpp" />
     <ClCompile Include="UIString.cpp" />
   </ItemGroup>
@@ -235,9 +238,12 @@
     <ClInclude Include="rendering.h" />
     <ClInclude Include="results.h" />
     <ClInclude Include="score.h" />
+    <ClInclude Include="scorebox.h" />
     <ClInclude Include="silhouette.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="spikeTrap.h" />
+    <ClInclude Include="timer.h" />
+    <ClInclude Include="timerbox.h" />
     <ClInclude Include="title.h" />
     <ClInclude Include="UIString.h" />
   </ItemGroup>

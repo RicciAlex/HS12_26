@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// 番号処理 [number.cpp]
+// スコアボックス処理 [scorebox.cpp]
 // Author : KADO TAKUMA
 //
 //=============================================================================
@@ -8,30 +8,28 @@
 //=============================================================================
 // インクルードファイル
 //=============================================================================
-#include "number.h"
+#include "timerbox.h"
 #include "rendering.h"
 #include "application.h"
-#include "player.h"
 #include <assert.h>
 
 //=============================================================================
 // 静的メンバ変数宣言
 //=============================================================================
-LPDIRECT3DTEXTURE9 CNumber::m_pTexture = nullptr;
+LPDIRECT3DTEXTURE9 CTimerBox::m_pTexture = {};
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CNumber::CNumber() : 
-	CObject_2D(5),
-	m_bShow(true)
+CTimerBox::CTimerBox() :
+	CObject_2D(4)
 {
 }
 
 //=============================================================================
 // デストラクタ
 //=============================================================================
-CNumber::~CNumber()
+CTimerBox::~CTimerBox()
 {
 
 }
@@ -39,30 +37,27 @@ CNumber::~CNumber()
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CNumber::Init(void)
+HRESULT CTimerBox::Init(void)
 {
 	//オブジェクトの初期化処理
 	CObject_2D::Init();
+
+	//頂点サイズの設定
+	CObject_2D::SetSize(D3DXVECTOR2(170.0f, 50.0f));
 
 	//頂点カラーの設定
 	CObject_2D::SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 	//派生のテクスチャポインタを親のテクスチャポインタに代入する処理
-	SetTexture(CObject::TEXTURE_NUMBERS);
-
-	//テクスチャ座標初期化
-	float fShiftWidth = 1.0f / 10.0f;
-
-	SetTextureParameter(1, 10, 1, INT_MAX);
-	SetAnimPattern(0);
+	SetTexture(CObject::TEXTURE_TIMERBOX);
 
 	return S_OK;
 }
 
 //=============================================================================
-// 更新処理
+// 終了処理
 //=============================================================================
-void CNumber::Uninit(void)
+void CTimerBox::Uninit(void)
 {
 	//オブジェクトの終了処理
 	CObject_2D::Uninit();
@@ -71,62 +66,56 @@ void CNumber::Uninit(void)
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CNumber::Update(void)
+void CTimerBox::Update(void)
 {
-	this;
-
-	int a = 0;
+	//オブジェクトの更新処理
+	CObject_2D::Update();
 }
 
 //=============================================================================
 // 描画処理
 //=============================================================================
-void CNumber::Draw()
+void CTimerBox::Draw(void)
 {
-	if (m_bShow)
-	{
-		//オブジェクトの描画処理
-		CObject_2D::Draw();
-	}
+	//オブジェクトの描画処理
+	CObject_2D::Draw();
 }
 
 //=============================================================================
-// 番号の生成処理
+// ライフの生成処理
 //=============================================================================
-CNumber *CNumber::Create(D3DXVECTOR3 pos, D3DXVECTOR2 size)
+CTimerBox *CTimerBox::Create(D3DXVECTOR3 pos)
 {
 	//ポインタ宣言
-	CNumber *pNumber = nullptr;
+	CTimerBox *pScoreBox = nullptr;
 
 	//インスタンス生成
-	pNumber = new CNumber;
+	pScoreBox = new CTimerBox;
 
-	if (pNumber != nullptr)
+	if (pScoreBox != nullptr)
 	{//ポインタが存在したら実行
-		pNumber->Init();
-		pNumber->SetSize(size);
-		pNumber->SetPos(pos);
-		pNumber->SetColor(D3DXCOLOR(0.4f, 0.4f, 1.0f, 1.0f));
+		pScoreBox->Init();
+		pScoreBox->SetPos(pos);
 	}
 	else
 	{//ポインタが虚無だったら実行
 		assert(false);
 	}
 
-	return pNumber;
+	return pScoreBox;
 }
 
 //=============================================================================
 // テクスチャの読み込み
 //=============================================================================
-HRESULT CNumber::Load(void)
+HRESULT CTimerBox::Load(void)
 {
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	//テクスチャの読み込み*
 	D3DXCreateTextureFromFile(pDevice,
-		"data/TEXTURE/number000.png",
+		"data/TEXTURE/ScoreBox_0.png",
 		&m_pTexture);
 
 	return S_OK;
@@ -135,7 +124,7 @@ HRESULT CNumber::Load(void)
 //=============================================================================
 // テクスチャの破棄
 //=============================================================================
-void CNumber::UnLoad(void)
+void CTimerBox::UnLoad(void)
 {
 	//テクスチャの破棄
 	if (m_pTexture != NULL)

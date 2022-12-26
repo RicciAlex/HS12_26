@@ -17,7 +17,7 @@
 //=============================================================================
 class CPlayer;
 class CScore;
-
+class CTimer;
 
 class CGame : public CMode
 {
@@ -41,11 +41,13 @@ public:
 	void SetPlayer(CPlayer* pPlayer);		//プレイヤーの設定処理
 	CPlayer* GetPlayer(void);				//プレイヤーの取得処理
 	static CScore* GetScore() { return m_pScore; }
+	static CTimer* GetTimer() { return m_pTimer; }
 
 private:
 
 	CPlayer* m_pPlayer;
 	static CScore* m_pScore;
+	static CTimer* m_pTimer;
 
 };
 

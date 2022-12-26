@@ -8,18 +8,17 @@
 //=============================================================================
 // インクルードファイル
 //=============================================================================
-#include "score.h"
+#include "timer.h"
 #include "rendering.h"
 #include "application.h"
 #include "number.h"
 #include "game.h"
-#include "ranking.h"
 #include <assert.h>
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CScore::CScore() : 
+CTimer::CTimer() :
 	CObject(5),
 	m_nScore(0),
 	m_nSaveScore(0)
@@ -33,7 +32,7 @@ CScore::CScore() :
 //=============================================================================
 // デストラクタ
 //=============================================================================
-CScore::~CScore()
+CTimer::~CTimer()
 {
 
 }
@@ -41,7 +40,7 @@ CScore::~CScore()
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CScore::Init()
+HRESULT CTimer::Init()
 {
 	//自身のサイズを取得
 	D3DXVECTOR2 size = D3DXVECTOR2(40.0f, 30.0f);
@@ -60,7 +59,7 @@ HRESULT CScore::Init()
 //=============================================================================
 // 終了処理
 //=============================================================================
-void CScore::Uninit()
+void CTimer::Uninit()
 {
 	for (int nCnt = 0; nCnt < m_nDigit; nCnt++)
 	{
@@ -78,14 +77,14 @@ void CScore::Uninit()
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CScore::Update()
+void CTimer::Update()
 {
 }
 
 //=============================================================================
 // 描画処理
 //=============================================================================
-void CScore::Draw()
+void CTimer::Draw()
 {
 
 }
@@ -93,13 +92,13 @@ void CScore::Draw()
 //=============================================================================
 // スコア生成処理
 //=============================================================================
-CScore * CScore::Create(bool bCalcDigit, int nScore, int nDigit, D3DXVECTOR3 pos, D3DXVECTOR2 size)
+CTimer * CTimer::Create(bool bCalcDigit, int nScore, int nDigit, D3DXVECTOR3 pos, D3DXVECTOR2 size)
 {
 	//ポインタ宣言
-	CScore *pScore = nullptr;
+	CTimer *pScore = nullptr;
 
 	//インスタンス生成
-	pScore = new CScore;
+	pScore = new CTimer;
 
 	if (pScore != nullptr)
 	{//ポインタが存在したら実行
@@ -121,7 +120,7 @@ CScore * CScore::Create(bool bCalcDigit, int nScore, int nDigit, D3DXVECTOR3 pos
 //=============================================================================
 // スコアの設定処理
 //=============================================================================
-void CScore::SetScore(int nScore)
+void CTimer::SetScore(int nScore)
 {
 	//各桁の数字を格納
 	int aPosTex[SCORE_DIGIT];
@@ -142,9 +141,6 @@ void CScore::SetScore(int nScore)
 		m_apNumber[nCnt]->SetAnimPattern(aPosTex[nCnt]);
 	}
 
-	//CResult::GetScore(m_nScore);
-	CRanking::GetRanking(m_nScore);
-
 	////スコア計算式
 	//aPosTex[0] = m_nScore % 100000 / 10000;
 	//aPosTex[1] = m_nScore % 10000 / 1000;
@@ -152,19 +148,19 @@ void CScore::SetScore(int nScore)
 	//aPosTex[3] = m_nScore % 100 / 10;
 	//aPosTex[4] = m_nScore % 10 / 1;
 
-//	//テクスチャ座標の設定
-//	for (int nCnt = 0; nCnt < m_nDigit; nCnt++)
-//	{
-//		//float fShiftWidth = 1.0f / 10;
-//		//m_apNumber[nCnt]->SetUV((aPosTex[nCnt] * fShiftWidth), (fShiftWidth + (aPosTex[nCnt] * fShiftWidth)), 0.0f, 1.0f);
-//
-//	}
+	//	//テクスチャ座標の設定
+	//	for (int nCnt = 0; nCnt < m_nDigit; nCnt++)
+	//	{
+	//		//float fShiftWidth = 1.0f / 10;
+	//		//m_apNumber[nCnt]->SetUV((aPosTex[nCnt] * fShiftWidth), (fShiftWidth + (aPosTex[nCnt] * fShiftWidth)), 0.0f, 1.0f);
+	//
+	//	}
 }
 
 //=============================================================================
 // スコアの加算処理
 //=============================================================================
-void CScore::AddScore(int nValue)
+void CTimer::AddScore(int nValue)
 {
 	SetScore(m_nScore + nValue);
 
@@ -175,7 +171,7 @@ void CScore::AddScore(int nValue)
 //=============================================================================
 // スコアの減算処理
 //=============================================================================
-void CScore::SubScore(int nValue)
+void CTimer::SubScore(int nValue)
 {
 	SetScore(m_nScore - nValue);
 }
@@ -183,7 +179,7 @@ void CScore::SubScore(int nValue)
 //=============================================================================
 // 保存スコアの加算処理
 //=============================================================================
-void CScore::AddSaveScore(int nValue)
+void CTimer::AddSaveScore(int nValue)
 {
 	m_nSaveScore += nValue;
 }
@@ -191,7 +187,7 @@ void CScore::AddSaveScore(int nValue)
 //=============================================================================
 // 桁数を計算する処理
 //=============================================================================
-void CScore::CalcDigit(int nScore)
+void CTimer::CalcDigit(int nScore)
 {
 	//自身のサイズを取得
 	D3DXVECTOR2 size = D3DXVECTOR2(20.0f, 30.0f);
@@ -234,7 +230,7 @@ void CScore::CalcDigit(int nScore)
 //=============================================================================
 // 座標設定処理
 //=============================================================================
-void CScore::SetPos(D3DXVECTOR3 pos)
+void CTimer::SetPos(D3DXVECTOR3 pos)
 {
 	//自身のサイズを取得
 	D3DXVECTOR2 size = D3DXVECTOR2(16.0f, 30.0f);

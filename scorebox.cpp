@@ -9,8 +9,9 @@
 // インクルードファイル
 //=============================================================================
 #include "scorebox.h"
-#include "renderer.h"
+#include "rendering.h"
 #include "application.h"
+#include <assert.h>
 
 //=============================================================================
 // 静的メンバ変数宣言
@@ -20,11 +21,9 @@ LPDIRECT3DTEXTURE9 CScoreBox::m_pTexture = {};
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CScoreBox::CScoreBox(int nPriority) :
-	CObject2D(nPriority)
+CScoreBox::CScoreBox() :
+	CObject_2D(4)
 {
-	//オブジェクトのタイプセット処理
-	CObject::SetType(OBJTYPE_SCOREBOX);
 }
 
 //=============================================================================
@@ -41,16 +40,16 @@ CScoreBox::~CScoreBox()
 HRESULT CScoreBox::Init(void)
 {
 	//オブジェクトの初期化処理
-	CObject2D::Init();
+	CObject_2D::Init();
 
 	//頂点サイズの設定
-	CObject2D::SetSize(D3DXVECTOR2(SCOREBOX_WIDTH, SCOREBOX_HEIGHT));
+	CObject_2D::SetSize(D3DXVECTOR2(170.0f, 50.0f));
 
 	//頂点カラーの設定
-	CObject2D::SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	CObject_2D::SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 	//派生のテクスチャポインタを親のテクスチャポインタに代入する処理
-	BindTexture(m_pTexture);
+	SetTexture(CObject::TEXTURE_SCOREBOX);
 
 	return S_OK;
 }
@@ -61,7 +60,7 @@ HRESULT CScoreBox::Init(void)
 void CScoreBox::Uninit(void)
 {
 	//オブジェクトの終了処理
-	CObject2D::Uninit();
+	CObject_2D::Uninit();
 }
 
 //=============================================================================
@@ -70,7 +69,7 @@ void CScoreBox::Uninit(void)
 void CScoreBox::Update(void)
 {
 	//オブジェクトの更新処理
-	CObject2D::Update();
+	CObject_2D::Update();
 }
 
 //=============================================================================
@@ -79,7 +78,7 @@ void CScoreBox::Update(void)
 void CScoreBox::Draw(void)
 {
 	//オブジェクトの描画処理
-	CObject2D::Draw();
+	CObject_2D::Draw();
 }
 
 //=============================================================================
@@ -95,8 +94,8 @@ CScoreBox *CScoreBox::Create(D3DXVECTOR3 pos)
 
 	if (pScoreBox != nullptr)
 	{//ポインタが存在したら実行
-		pScoreBox->SetPos(pos);
 		pScoreBox->Init();
+		pScoreBox->SetPos(pos);
 	}
 	else
 	{//ポインタが虚無だったら実行
@@ -112,7 +111,7 @@ CScoreBox *CScoreBox::Create(D3DXVECTOR3 pos)
 HRESULT CScoreBox::Load(void)
 {
 	//デバイスの取得
-	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDivice();
+	LPDIRECT3DDEVICE9 pDevice = CApplication::GetRenderer()->GetDevice();
 
 	//テクスチャの読み込み*
 	D3DXCreateTextureFromFile(pDevice,
