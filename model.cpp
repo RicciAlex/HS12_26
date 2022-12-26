@@ -27,14 +27,20 @@ std::vector <LPDIRECT3DTEXTURE9>     CModel::m_vModelTexture[CModel::MODEL_MAX];
 //モデルのXファイルの相対パス
 char*			CModel::m_pModelPass[MODEL_MAX] =
 {																				
-	{ "data\\MODELS\\Player\\PlayerHead.x" },					//MODEL_PLAYER_HEAD,
-	{ "data\\MODELS\\Player\\PlayerBody.x" },					//MODEL_PLAYER_BODY,
-	{ "data\\MODELS\\Player\\PlayerForearm.x" },				//MODEL_PLAYER_FOREARM,
-	{ "data\\MODELS\\Player\\PlayerArm.x" },					//MODEL_PLAYER_ARM,
-	{ "data\\MODELS\\Player\\PlayerLeg.x" },					//MODEL_PLAYER_LEG,
-	{ "data\\MODELS\\Player\\PlayerFoot.x" },					//MODEL_PLAYER_FOOT,
-	{ "data\\MODELS\\Player\\Saya.x" },							//MODEL_SAYA,
-	{ "data\\MODELS\\Player\\Katana.x" },						//MODEL_KATANA,
+	{ "data\\MODELS\\AstroBot\\00_body.x" },					//MODEL_PLAYER_BODY,
+	{ "data\\MODELS\\AstroBot\\01_head.x" },					//MODEL_PLAYER_HEAD,
+
+	{ "data\\MODELS\\AstroBot\\02_armR_long.x" },				//MODEL_PLAYER_FOREARM_RIGHT,
+	{ "data\\MODELS\\AstroBot\\03_handR.x" },					//MODEL_PLAYER_ARM_RIGHT,
+
+	{ "data\\MODELS\\AstroBot\\04_armL_long.x" },				//MODEL_PLAYER_FOREARM_LEFT,
+	{ "data\\MODELS\\AstroBot\\05_handL.x" },					//MODEL_PLAYER_ARM_LEFT,
+
+	{ "data\\MODELS\\AstroBot\\06_legR.x" },					//MODEL_PLAYER_LEG_RIGHT,
+	{ "data\\MODELS\\AstroBot\\07_footR.x" },					//MODEL_PLAYER_FOOT_RIGHT,
+
+	{ "data\\MODELS\\AstroBot\\08_legL.x" },					//MODEL_PLAYER_LEG_LEFT,
+	{ "data\\MODELS\\AstroBot\\09_footL.x" },					//MODEL_PLAYER_FOOT_LEFT,
 
 	{ "data\\MODELS\\Obstacle\\8InchNails.x" },					//MODEL_NAILS,
 	{ "data\\MODELS\\Obstacle\\SpikeBase.x" },					//MODEL_SPIKE_BASE,
