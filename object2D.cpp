@@ -18,6 +18,7 @@ LPDIRECT3DTEXTURE9 CObject_2D::m_pTextureAll[CObject_2D::TEXTURE_TYPE_MAX] = {};
 char* CObject_2D::m_paTextPass[CObject::TEXTURE_TYPE_MAX] =
 {
 	" ",												//TEXTURE_NULL,
+
 	"data\\TEXTURE\\Characters.png",					//TEXTURE_CHARACTERS,
 	"data\\TEXTURE\\Block.png",							//TEXTURE_BLOCK,													
 	"data\\TEXTURE\\TemporaryTitle.png",				//TEXTURE_TITLE,

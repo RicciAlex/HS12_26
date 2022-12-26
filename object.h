@@ -55,8 +55,8 @@ public:
 		TEXTURE_CHARACTERS,
 		TEXTURE_BLOCK,
 		TEXTURE_TITLE,
-		TEXTURE_NUMBERS,
 		TEXTURE_RANKING,
+		TEXTURE_NUMBERS,
 		TEXTURE_SCOREBOX,
 		TEXTURE_TIMERBOX,
 		TEXTURE_COUNTDOWN_0,
@@ -91,7 +91,7 @@ public:
 	static void DrawAll(void);							//全部の描画処理
 	static CObject** GetObj(void);						//オブジェクトの取得処理
 
-	static int random(const int low, const int high);				//乱数を返す処理
+	static int random(const int low, const int high);	//乱数を返す処理
 
 private:								
 
