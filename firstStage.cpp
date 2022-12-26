@@ -111,7 +111,7 @@ void CFirstStage::Update(void)
 
 		if (nCntEnd >= 29)
 		{
-			CApplication::SetFade(CApplication::MODE_RESULTS);
+			CApplication::SetFade(CApplication::MODE_RANKING);
 		}
 	}
 
@@ -119,7 +119,7 @@ void CFirstStage::Update(void)
 
 	if (CInputKeyboard::GetKeyboardTrigger(DIK_O))
 	{
-		CApplication::SetFade(CApplication::MODE_RESULTS);
+		CApplication::SetFade(CApplication::MODE_RANKING);
 	}
 
 #endif // DEBUG

@@ -373,13 +373,13 @@ void CApplication::SetMode(Mode mode)
 
 	break;
 
-	case CApplication::MODE_RESULTS:
+	//case CApplication::MODE_RESULTS:
 
-	{
-		m_pMode = CResults::Create();
-	}
+	//{
+	//	m_pMode = CResults::Create();
+	//}
 
-	break;
+	//break;
 
 	case CApplication::MODE_RANKING:
 
