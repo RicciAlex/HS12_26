@@ -515,7 +515,7 @@ void CPlayer::PlayerController(void)
 
 		m_pos.z += m_fFrameMove;
 
-		ControlBalance();
+		//ControlBalance();
 	}
 
 }

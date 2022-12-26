@@ -1094,8 +1094,11 @@ void CMeshfield::AddNewField(void)
 	posNew.z += 3.0f * m_fFieldSize.y;
 
 	int nIdx = random(0, FIELD_NUM - 1);
+	nIdx = 5;
 
 	CMeshfield::Create(posNew, Vec3Null, m_pFieldPass[nIdx], 3);
+
+	
 
 	switch (nIdx)
 	{
@@ -1187,18 +1190,18 @@ void CMeshfield::AddNewField(void)
 	case 5:
 
 	{
-		CBoxHitbox::Create(D3DXVECTOR3(-100.0f, -200.0f, posNew.z - 875.0f), Vec3Null, D3DXVECTOR3(160.0f, 75.0f, 35.0f), CHitbox::TYPE_NEUTRAL, nullptr);
-		CBoxHitbox::Create(D3DXVECTOR3(-75.0f, -200.0f, posNew.z - 275.0f), Vec3Null, D3DXVECTOR3(180.0f, 75.0f, 35.0f), CHitbox::TYPE_NEUTRAL, nullptr);
-		CBoxHitbox::Create(D3DXVECTOR3(75.0f, -200.0f, posNew.z - 575.0f), Vec3Null, D3DXVECTOR3(180.0f, 75.0f, 35.0f), CHitbox::TYPE_NEUTRAL, nullptr);
+		CBoxHitbox::Create(D3DXVECTOR3(-150.0f, -200.0f, posNew.z - 775.0f), Vec3Null, D3DXVECTOR3(160.0f, 75.0f, 35.0f), CHitbox::TYPE_NEUTRAL, nullptr);
+		CBoxHitbox::Create(D3DXVECTOR3(-175.0f, -200.0f, posNew.z - 125.0f), Vec3Null, D3DXVECTOR3(180.0f, 75.0f, 35.0f), CHitbox::TYPE_NEUTRAL, nullptr);
+		CBoxHitbox::Create(D3DXVECTOR3(125.0f, -200.0f, posNew.z - 425.0f), Vec3Null, D3DXVECTOR3(180.0f, 75.0f, 35.0f), CHitbox::TYPE_NEUTRAL, nullptr);
 
-		CNail::Create(D3DXVECTOR3(-200.0f, -199.9f, posNew.z - 950.0f));
-		CNail::Create(D3DXVECTOR3(-125.0f, -199.9f, posNew.z - 950.0f));
+		CNail::Create(D3DXVECTOR3(-200.0f, -199.9f, posNew.z - 850.0f));
+		CNail::Create(D3DXVECTOR3(-125.0f, -199.9f, posNew.z - 850.0f));
 
-		CNail::Create(D3DXVECTOR3(200.0f, -199.9f, posNew.z - 675.0f));
-		CNail::Create(D3DXVECTOR3(125.0f, -199.9f, posNew.z - 675.0f));
+		CNail::Create(D3DXVECTOR3(200.0f, -199.9f, posNew.z - 575.0f));
+		CNail::Create(D3DXVECTOR3(125.0f, -199.9f, posNew.z - 575.0f));
 
-		CNail::Create(D3DXVECTOR3(-200.0f, -199.9f, posNew.z - 375.0f));
-		CNail::Create(D3DXVECTOR3(-125.0f, -199.9f, posNew.z - 375.0f));
+		CNail::Create(D3DXVECTOR3(-200.0f, -199.9f, posNew.z - 275.0f));
+		CNail::Create(D3DXVECTOR3(-125.0f, -199.9f, posNew.z - 275.0f));
 	}
 
 	break;
