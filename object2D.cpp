@@ -21,7 +21,7 @@ char* CObject_2D::m_paTextPass[CObject::TEXTURE_TYPE_MAX] =
 	"data\\TEXTURE\\Characters.png",					//TEXTURE_CHARACTERS,
 	"data\\TEXTURE\\Block.png",							//TEXTURE_BLOCK,													
 	"data\\TEXTURE\\TemporaryTitle.png",				//TEXTURE_TITLE,
-	"data\\TEXTURE\\number000.png",						//TEXTURE_NUMBERS,
+	"data\\TEXTURE\\ranking.png",						//TEXTURE_RANKING,
 	"data\\TEXTURE\\number000.png",						//TEXTURE_NUMBERS,
 	"data\\TEXTURE\\ScoreBox.png",						//TEXTURE_SCOREBOX,
 	"data\\TEXTURE\\TimerBox.png",						//TEXTURE_TIMERBOX,
