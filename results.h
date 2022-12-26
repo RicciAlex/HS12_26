@@ -15,7 +15,7 @@
 //=============================================================================
 //‘O•ûéŒ¾
 //=============================================================================
-
+class CUIString;
 
 class CResults : public CMode
 {
@@ -30,6 +30,7 @@ public:
 	static CResults* Create(void);				//¶¬ˆ—
 
 private:
+	CUIString *m_pScoreUI;
 
 };
 

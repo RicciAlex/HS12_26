@@ -71,6 +71,9 @@ HRESULT CRanking::Init(void)
 	m_pScoreUI = CUIString::Create(D3DXVECTOR3(200.0f, 400.0f, 0.0f), D3DXVECTOR2(150.0f, 50.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), "4th", 5);
 	m_pScoreUI = CUIString::Create(D3DXVECTOR3(200.0f, 500.0f, 0.0f), D3DXVECTOR2(150.0f, 50.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), "5th", 5);
 
+	//サウンドの再生
+	CApplication::GetSound()->Play(CSound::SOUND_LABEL_BGM_RANKING);
+
 	//ファイル読み込み処理
 	Load();
 
@@ -82,7 +85,8 @@ HRESULT CRanking::Init(void)
 //======================================================
 void CRanking::Uninit(void)
 {
-	//StopSound();
+	//サウンドを止める
+	CApplication::GetSound()->Stop();
 	for (int nCnt = 0; nCnt < MAX_POLIGON; nCnt++)
 	{
 		if (m_pObj2D[nCnt] != nullptr)
