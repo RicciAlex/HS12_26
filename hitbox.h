@@ -125,7 +125,8 @@ public:
 
 	void SetOverlapResponse(HITBOX_TYPE type, OVERLAP_RESPONSE_TYPE reaction);		//重なった場合の反応設定処理
 	void IgnoreAllCollision(void);							//全部の衝突を無視するようにの設定処理
-															
+										
+
 	static void ReleaseAll(void);							//全部のヒットボックスの破棄処理
 	static std::vector <CHitbox*>* GetAllHitbox(void);		//全部のヒットボックスの取得処理
 

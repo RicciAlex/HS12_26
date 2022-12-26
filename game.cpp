@@ -16,6 +16,7 @@
 #include "timer.h"
 #include "timerbox.h"
 #include "inputKeyboard.h"
+#include "hitbox.h"
 #include "countdown.h"
 
 CScore* CGame::m_pScore = nullptr;

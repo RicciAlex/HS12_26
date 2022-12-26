@@ -12,8 +12,22 @@
 #include "application.h"
 #include "rendering.h"
 #include "object2D.h"
+#include "camera.h"
+#include "BoxHitbox.h"
+#include "nail.h"
+#include "spikeTrap.h"
 
 std::vector <CMeshfield*> CMeshfield::m_vMeshfield;
+const D3DXVECTOR2 CMeshfield::m_fFieldSize = D3DXVECTOR2(500.0f, 1000.0f);
+char* CMeshfield::m_pFieldPass[FIELD_NUM] =
+{
+	"data\\MeshField\\FlatStage.txt",
+	"data\\MeshField\\PitFall_Stage_01.txt",
+	"data\\MeshField\\SlopePitFall_Stage_01.txt",
+	"data\\MeshField\\SlopePitFall_Stage_02.txt",
+	"data\\MeshField\\Slope_Stage_01.txt",
+	"data\\MeshField\\Wall_Stage_01.txt",
+};
 
 //コンストラクタ
 CMeshfield::CMeshfield()
@@ -187,6 +201,11 @@ void CMeshfield::Update(void)
 		//頂点バッファのアンロック
 		m_pVtxBuff->Unlock();
 
+	}
+
+	if (m_pos.z < CApplication::GetCamera()->GetPos().z - 100.0f)
+	{
+		AddNewField();
 	}
 }
 
@@ -1067,4 +1086,126 @@ void CMeshfield::LoadVertex(char* pPass)
 
 	m_pIdxBuff->Unlock();
 
+}
+
+void CMeshfield::AddNewField(void)
+{
+	D3DXVECTOR3 posNew = m_pos;
+	posNew.z += 3.0f * m_fFieldSize.y;
+
+	int nIdx = random(0, FIELD_NUM - 1);
+
+	CMeshfield::Create(posNew, Vec3Null, m_pFieldPass[nIdx], 3);
+
+	switch (nIdx)
+	{
+	case 0:
+
+	{
+		for (int nCnt = 1; nCnt < 3; nCnt++)
+		{
+			CNail::Create(D3DXVECTOR3( 75.0f * nCnt, -199.9f, posNew.z - 800.0f));
+			CNail::Create(D3DXVECTOR3(-75.0f * nCnt, -199.9f, posNew.z - 800.0f));
+		}
+
+		CSpikeTrap::Create(D3DXVECTOR3(0.0f, -199.9f, posNew.z - 500.0f), 2.0f, 60);
+		CSpikeTrap::Create(D3DXVECTOR3(-100.0f, -199.9f, posNew.z - 500.0f), 2.0f, 60);
+		CSpikeTrap::Create(D3DXVECTOR3(100.0f, -199.9f, posNew.z - 500.0f), 2.0f, 60);
+
+		CNail::Create(D3DXVECTOR3((75.0f), -199.0f, posNew.z - 200.0f));
+		CNail::Create(D3DXVECTOR3(-(75.0f), -199.0f, posNew.z - 200.0f));
+		CNail::Create(D3DXVECTOR3(0.0f, -199.0f, posNew.z - 200.0f));
+	}
+
+		break;
+
+	case 1:
+
+	{
+		CBoxHitbox::Create(D3DXVECTOR3(75.0f, -410.0f, posNew.z - 375.0f), Vec3Null, D3DXVECTOR3(125.0f, 200.0f, 125.0f), CHitbox::TYPE_FALL, nullptr, -1, CHitbox::EFFECT_FALL);
+		CBoxHitbox::Create(D3DXVECTOR3(-75.0f, -410.0f, posNew.z - 800.0f), Vec3Null, D3DXVECTOR3(125.0f, 200.0f, 125.0f), CHitbox::TYPE_FALL, nullptr, -1, CHitbox::EFFECT_FALL);
+
+		CNail::Create(D3DXVECTOR3(-200.0f, -199.9f, posNew.z - 950.0f));
+		CSpikeTrap::Create(D3DXVECTOR3(200.0f, -199.9f, posNew.z - 550.0f), 2.0f, 60);
+
+		CSpikeTrap::Create(D3DXVECTOR3(-200.0f, -199.9f, posNew.z - 50.0f), 2.0f, 30);
+		CSpikeTrap::Create(D3DXVECTOR3(-125.0f, -199.9f, posNew.z - 50.0f), 2.0f, 30);
+		CSpikeTrap::Create(D3DXVECTOR3( -50.0f, -199.9f, posNew.z - 50.0f), 2.0f, 30);
+	}
+
+		break;
+
+	case 2:
+
+	{
+		CBoxHitbox::Create(D3DXVECTOR3(0.0f, -410.0f, posNew.z - 500.0f), Vec3Null, D3DXVECTOR3(150.0f, 270.0f, 150.0f), CHitbox::TYPE_FALL, nullptr, -1, CHitbox::EFFECT_FALL);
+
+		CSpikeTrap::Create(D3DXVECTOR3(-175.0f, -199.9f, posNew.z -900.0f));
+		CSpikeTrap::Create(D3DXVECTOR3(-100.0f, -199.9f, posNew.z -900.0f));
+		CSpikeTrap::Create(D3DXVECTOR3(175.0f, -199.9f, posNew.z -900.0f));
+		CSpikeTrap::Create(D3DXVECTOR3(100.0f, -199.9f, posNew.z -900.0f));
+	}
+
+	break;
+
+	case 3:
+
+	{
+		CBoxHitbox::Create(D3DXVECTOR3( 125.0f, -410.0f, posNew.z -500.0f), Vec3Null, D3DXVECTOR3(75.0f, 150.0f, 400.0f), CHitbox::TYPE_FALL, nullptr, -1, CHitbox::EFFECT_FALL);
+		CBoxHitbox::Create(D3DXVECTOR3(-125.0f, -410.0f, posNew.z -500.0f), Vec3Null, D3DXVECTOR3(75.0f, 150.0f, 400.0f), CHitbox::TYPE_FALL, nullptr, -1, CHitbox::EFFECT_FALL);
+
+		CSpikeTrap::Create(D3DXVECTOR3(-200.0f, -199.9f, posNew.z -950.0f), 2.0f, 60);
+		CSpikeTrap::Create(D3DXVECTOR3( 200.0f, -199.9f, posNew.z -950.0f), 2.0f, 60, 59);
+	}
+
+	break;
+
+	case 4:
+
+	{
+		float fP1 = (float)CObject::random(-225, -175), fP2 = (float)CObject::random(-225, -175), fP3 = (float)CObject::random(-225, -175);
+		float fResult = 0.0f;
+
+		for (int nCnt = 0; nCnt < 3; nCnt++)
+		{
+			fResult = fP1 + ((float)CObject::random(0, 100)) + (float)(75.0f * nCnt);
+			CNail::Create(D3DXVECTOR3(fResult, -199.9f, posNew.z - 900.0f));
+			fP1 = fResult;
+
+			fResult = fP2 + ((float)CObject::random(0, 100)) + (float)(75.0f * nCnt);
+			CNail::Create(D3DXVECTOR3(fResult, -199.9f, posNew.z - 625.0f));
+			fP2 = fResult;
+
+			fResult = fP3 + ((float)CObject::random(0, 50)) + (float)(75.0f * nCnt);
+			CNail::Create(D3DXVECTOR3(fResult, -199.9f, posNew.z - 400.0f));
+			fP3 = fResult;
+		}
+	}
+
+	break;
+
+	case 5:
+
+	{
+		CBoxHitbox::Create(D3DXVECTOR3(-100.0f, -200.0f, posNew.z - 875.0f), Vec3Null, D3DXVECTOR3(160.0f, 75.0f, 35.0f), CHitbox::TYPE_NEUTRAL, nullptr);
+		CBoxHitbox::Create(D3DXVECTOR3(-75.0f, -200.0f, posNew.z - 275.0f), Vec3Null, D3DXVECTOR3(180.0f, 75.0f, 35.0f), CHitbox::TYPE_NEUTRAL, nullptr);
+		CBoxHitbox::Create(D3DXVECTOR3(75.0f, -200.0f, posNew.z - 575.0f), Vec3Null, D3DXVECTOR3(180.0f, 75.0f, 35.0f), CHitbox::TYPE_NEUTRAL, nullptr);
+
+		CNail::Create(D3DXVECTOR3(-200.0f, -199.9f, posNew.z - 950.0f));
+		CNail::Create(D3DXVECTOR3(-125.0f, -199.9f, posNew.z - 950.0f));
+
+		CNail::Create(D3DXVECTOR3(200.0f, -199.9f, posNew.z - 675.0f));
+		CNail::Create(D3DXVECTOR3(125.0f, -199.9f, posNew.z - 675.0f));
+
+		CNail::Create(D3DXVECTOR3(-200.0f, -199.9f, posNew.z - 375.0f));
+		CNail::Create(D3DXVECTOR3(-125.0f, -199.9f, posNew.z - 375.0f));
+	}
+
+	break;
+
+	default:
+		break;
+	}
+
+	Release();
 }

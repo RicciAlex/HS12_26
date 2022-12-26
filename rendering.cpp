@@ -115,7 +115,7 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 	m_pD3DDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_LINEAR);
 
 	//”ÍˆÍŽw’è
-	float fFogStart = 1500.0f, fFogEnd = 3600.0f;
+	float fFogStart = 800.0f, fFogEnd = 2000.0f;
 	m_pD3DDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD*)(&fFogStart));
 	m_pD3DDevice->SetRenderState(D3DRS_FOGEND, *(DWORD*)(&fFogEnd));
 
