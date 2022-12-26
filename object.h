@@ -96,7 +96,7 @@ public:
 	static void DrawAll(void);							//全部の描画処理
 	static CObject** GetObj(void);						//オブジェクトの取得処理
 
-	static int random(const int low, const int high);				//乱数を返す処理
+	static int random(const int low, const int high);	//乱数を返す処理
 
 private:
 
