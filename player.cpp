@@ -537,8 +537,12 @@ void CPlayer::RespawnPlayer(void)
 {
 	m_pos = D3DXVECTOR3(0.0f, -100.0f, 0.0f);
 
-	m_nInvincibilityCnt = 90;
-	m_pHitbox->SetInvincibility(true);
+	if (m_pAnimator && !m_bFall)
+	{
+		m_pAnimator->SetPresentAnim(STATE_FALL);
+	}
+
+	m_bFall = true;
 }
 
 void CPlayer::HitboxEffectUpdate(void)
