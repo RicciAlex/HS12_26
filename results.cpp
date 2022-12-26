@@ -13,6 +13,7 @@
 #include "inputKeyboard.h"
 #include "application.h"
 #include "UIString.h"
+#include "debugProc.h"
 
 //コンストラクタ
 CResults::CResults()
@@ -45,6 +46,35 @@ HRESULT CResults::Init(void)
 
 	//サウンドの再生
 	CApplication::GetSound()->Play(CSound::SOUND_LABEL_BGM_RESULT);
+
+	if (m_pScoreUI != nullptr)
+	{//スコアUIの更新処理
+
+	 //スコアを取得して、4桁の文字列に変換する
+		//int nScore = m_pScore->GetScore();
+		//std::string str = std::to_string(nScore);
+		//std::string begin = {};
+
+		//if (str.size() < 4)
+		//{
+		//	for (int nCnt = 0; nCnt < 4 - (int)str.size(); nCnt++)
+		//	{
+		//		begin += '0';
+		//	}
+
+		//	begin += str;
+		//}
+		//else
+		//{
+		//	begin = str;
+		//}
+
+		//const char* pStr = begin.c_str();
+		//m_pScoreUI->ChangeString(pStr);				//UIの文字列の設定
+
+		//UIの生成
+		//m_pScoreUI = CUIString::Create(D3DXVECTOR3(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f)), D3DXVECTOR2(500.0f, 50.0f), D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f), pStr, 5);
+	}
 
 	return S_OK;
 }
