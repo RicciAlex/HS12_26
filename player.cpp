@@ -565,6 +565,15 @@ void CPlayer::PlayerController(void)
 			m_pos.x += 1.0f;
 		}
 
+		if (CInputKeyboard::GetKeyboardPress(DIK_W))
+		{
+			m_pos.z += 2.0f;
+		}
+		if (CInputKeyboard::GetKeyboardPress(DIK_S))
+		{
+			m_pos.z -= 2.0f;
+		}
+
 		ControlBalance();
 	}
 
