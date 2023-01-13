@@ -1094,7 +1094,6 @@ void CMeshfield::AddNewField(void)
 	posNew.z += 3.0f * m_fFieldSize.y;
 
 	int nIdx = random(0, FIELD_NUM - 1);
-	nIdx = 5;
 
 	CMeshfield* pField = CMeshfield::Create(posNew, Vec3Null, m_pFieldPass[nIdx], 3);
 	pField->SetTexture(CObject::TEXTURE_BLOCK);

@@ -71,7 +71,7 @@ HRESULT CApplication::Init(HINSTANCE hInstance, HWND hWnd)
 	}
 
 	//レンディングインスタンスの初期化処理
-	if (FAILED(m_pRenderer->Init(hWnd, FALSE)))
+	if (FAILED(m_pRenderer->Init(hWnd, TRUE)))
 	{//第2引数はFALSEだったら、フルスクリーンになります。
 		return -1;
 	}
